@@ -15,7 +15,7 @@ import {
   Venus,
   X,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import {
   Sheet,
@@ -47,7 +47,7 @@ import { searchProduct } from "/store/shopSlice";
 import { resetTokenAndCredentials } from "/store/authSlice";
 
 const ShoppingHeader = () => {
-  const { userName } = useSelector((state) => state.auth);
+  const { userName,userId } = useSelector((state) => state.auth);
   const { cart, isLoading } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const { toast } = useToast();
@@ -102,7 +102,7 @@ const ShoppingHeader = () => {
   };
 
   const handleCart = () => {
-    dispatch(cartProducts());
+    dispatch(cartProducts(userId));
   };
 
   const handleQuantity = (e, action) => {
