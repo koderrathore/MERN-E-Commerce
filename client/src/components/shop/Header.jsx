@@ -117,6 +117,7 @@ const ShoppingHeader = () => {
       updateQuantity({
         productId: e.products._id,
         quantity: quantity,
+        userId
       })
     )
       .then((data) => {

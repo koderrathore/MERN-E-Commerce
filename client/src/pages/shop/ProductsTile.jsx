@@ -16,9 +16,10 @@ const ShoppingProductTile = ({
   const dispatch = useDispatch();
   const { toast } = useToast();
   const location = useLocation();
+  const {userId} = useSelector((state) => state.auth);
   const handleAddTOCart = (prod) => {
     console.log(prod);
-    dispatch(addToCart(prod._id))
+    dispatch(addToCart({productId:prod._id,userId}))
       .then((data) => {
         if (data.payload.data.success) {
           toast({

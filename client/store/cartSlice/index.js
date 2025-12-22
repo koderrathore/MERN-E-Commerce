@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { act } from "react";
 
-export const addToCart = createAsyncThunk("/cart/add", async (productId) => {
+export const addToCart = createAsyncThunk("/cart/add", async ({productId,userId}) => {
   const { data } = await axios.post(
     `${import.meta.env.VITE_API_URL}/api/cart/add-to-cart`,
 
@@ -23,7 +23,7 @@ export const cartProducts = createAsyncThunk("/cart/get", async (userId) => {
 
 export const updateQuantity = createAsyncThunk(
   "/cart/put",
-  async ({ productId, quantity }) => {
+  async ({ productId, quantity,userId }) => {
     const { data } = await axios.put(
           `${import.meta.env.VITE_API_URL}/api/cart/update-quantity`,
 

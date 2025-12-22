@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 export const addReviews = async (req, res) => {
   const { user, productId, review, ratings } = req.body;
-  if (!user && !productId && !review && !ratings)
+  if (!user || !productId || !review || !ratings)
     return res.json({
       success: false,
       message: "didn't get all fileds",

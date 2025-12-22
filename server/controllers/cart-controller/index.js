@@ -6,19 +6,16 @@ import Products from "../../models/products-model/index.js";
 dotenv.config();
 
 export const addToCart = async (req, res) => {
-  const { productId } = req.body;
+  const { productId,userId } = req.body;
 
-  if (!productId)
+  if (!productId || !userId)
     return res.json({ success: false, message: "Invalid credentials" });
-
-  const token = req.cookies.token;
-  const decoded = jwt.verify(token, process.env.SECRET);
 
   try {
     const alreadyHaveCart = await Cart.findOne({ userId: decoded.id });
     if (!alreadyHaveCart) {
       const createCart = new Cart({
-        userId: decoded.id,
+        userId,
         items: [{ products: productId }],
       });
       await createCart.save();
@@ -69,19 +66,16 @@ export const cartProducts = async (req, res) => {
 };
 
 export const updateQuantity = async (req, res) => {
-  const { productId, quantity } = req.body;
-  if (!productId || quantity <= 0)
+  const { productId, quantity, userId } = req.body;
+  if (!productId || !userId || quantity <= 0)
     return res.json({
       success: false,
       message: "Invalid credentials",
       productId,
     });
 
-  const token = req.cookies.token;
-  const decoded = jwt.verify(token, process.env.SECRET);
-
   try {
-    const cart = await Cart.findOne({ userId: decoded.id });
+    const cart = await Cart.findOne({ userId});
 
     const gotem = cart.items.find(
       (e) => e.products.toString() === productId.toString()

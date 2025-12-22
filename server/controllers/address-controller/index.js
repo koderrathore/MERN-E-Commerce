@@ -6,8 +6,7 @@ dotenv.config();
 
 export const addAddress = async (req, res) => {
   const { userId, address, city, pinCode, phone } = req.body;
-  console.log(userId, address, city, pinCode, phone);
-  if (!userId && !address && !city && !pinCode && !phone)
+  if (!userId || !address || !city || !pinCode || !phone)
     return res.json({ success: false, message: "All fields must be filled" });
 
   try {
@@ -46,7 +45,6 @@ export const fetchAddress = async (req, res) => {
 
 export const editAddress = async (req, res) => {
   const { addressId, address, city, pinCode, phone } = req.body;
-  console.log(addressId)
   try {
     const findAddress = await Address.findOne({ _id: addressId });
 
