@@ -14,7 +14,7 @@ const Login = () => {
     e.preventDefault();
     dispatch(authLogin({ email, password }))
       .then((data) => {
-        if (data) {
+        if (data?.payload?.data?.success) {
           toast({
             title:"Login Succesfull",
           });
