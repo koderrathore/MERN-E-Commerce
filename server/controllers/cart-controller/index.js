@@ -52,15 +52,17 @@ export const addToCart = async (req, res) => {
 };
 
 export const cartProducts = async (req, res) => {
-  const token = req.cookies.token;
-  const decoded = jwt.verify(token, process.env.SECRET);
+  const { userId } = req.params;
   try {
-    const cartProducts = await Cart.find({ userId: decoded.id }).populate(
-      "items.products"
-    );
-    let items = cartProducts.items
-    console.log(Products)
-    res.json({ success: true, cartProducts, message: "Your cart items",items });
+    const cartProducts = await Cart.find({ userId }).populate("items.products");
+    let items = cartProducts.items;
+    console.log(Products);
+    res.json({
+      success: true,
+      cartProducts,
+      message: "Your cart items",
+      items,
+    });
   } catch (err) {
     console.log(err);
     res.json({ success: false, message: "Something went wrong" });
@@ -103,7 +105,7 @@ export const removeItem = async (req, res) => {
     return res.json({ success: false, message: "ProductId not found" });
 
   const token = req.cookies.token;
-  const decoded = jwt.verify(token,process.env.SECRET);
+  const decoded = jwt.verify(token, process.env.SECRET);
   try {
     const deleted = await Cart.updateOne(
       { userId: decoded.id },

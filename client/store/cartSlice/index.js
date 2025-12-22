@@ -12,9 +12,9 @@ export const addToCart = createAsyncThunk("/cart/add", async (productId) => {
   return { data };
 });
 
-export const cartProducts = createAsyncThunk("/cart/get", async () => {
+export const cartProducts = createAsyncThunk("/cart/get", async (userId) => {
   const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/cart/cart-products`,
+        `${import.meta.env.VITE_API_URL}/api/cart/cart-products/${userId}`,
 
     { withCredentials: true }
   );
