@@ -128,8 +128,8 @@ const ShoppingHeader = () => {
 
   const handleDeleteCartItem = (e) => {
     console.log(e);
-    dispatch(removeItem({ productId: e.products._id }))
-      .then((data) => dispatch(cartProducts()))
+    dispatch(removeItem({ productId: e.products._id,userId }))
+      .then((data) => dispatch(cartProducts(userId)))
       .catch((err) => console.log(err));
   };
 

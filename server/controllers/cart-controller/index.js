@@ -98,15 +98,13 @@ export const updateQuantity = async (req, res) => {
 };
 
 export const removeItem = async (req, res) => {
-  const { productId } = req.body;
-  if (!productId)
-    return res.json({ success: false, message: "ProductId not found" });
+  const { productId,userId } = req.body;
+  if (!productId && !userId)
+    return res.json({ success: false, message: "ProductId and UserId not found" });
 
-  const token = req.cookies.token;
-  const decoded = jwt.verify(token, process.env.SECRET);
   try {
     const deleted = await Cart.updateOne(
-      { userId: decoded.id },
+      { userId },
       { $pull: { items: { products: productId } } }
     );
 
@@ -119,7 +117,7 @@ export const removeItem = async (req, res) => {
     }
 
     res.json({ success: true, message: "Item removed", deleted });
-  } catch {
+  } catch (err){
     res.json({ success: false, message: "Something went wrong" });
   }
 };
