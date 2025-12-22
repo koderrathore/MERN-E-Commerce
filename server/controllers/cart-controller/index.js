@@ -12,7 +12,7 @@ export const addToCart = async (req, res) => {
     return res.json({ success: false, message: "Invalid credentials" });
 
   try {
-    const alreadyHaveCart = await Cart.findOne({ userId: decoded.id });
+    const alreadyHaveCart = await Cart.findOne({ userId });
     if (!alreadyHaveCart) {
       const createCart = new Cart({
         userId,

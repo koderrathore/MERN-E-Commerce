@@ -27,7 +27,7 @@ export const updateQuantity = createAsyncThunk(
     const { data } = await axios.put(
           `${import.meta.env.VITE_API_URL}/api/cart/update-quantity`,
 
-      { productId, quantity },
+      { productId, quantity,userId },
       { withCredentials: true }
     );
     return { data };

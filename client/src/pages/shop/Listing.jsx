@@ -69,6 +69,7 @@ const Listing = ({ tick }) => {
 
   const { orders } = useSelector((state) => state.orders);
   const user = useSelector((state) => state.auth);
+  const {userId} = useSelector((state) => state.auth);
   const { reviews, isLoading } = useSelector((state) => state.reviews);
   console.log(orders);
   console.log(user);
@@ -76,7 +77,7 @@ const Listing = ({ tick }) => {
 
   const handleAddTOCart = (prod) => {
     console.log(prod);
-    dispatch(addToCart(prod._id))
+    dispatch(addToCart({productId:prod._id,userId}))
       .then((data) => {
         if (data.payload.data.success) {
           toast({
