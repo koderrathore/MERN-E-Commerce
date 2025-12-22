@@ -41,7 +41,7 @@ import { cartProducts } from "/store/cartSlice";
 import { useToast } from "@/hooks/use-toast";
 import { updateQuantity } from "/store/cartSlice";
 import { removeItem } from "/store/cartSlice";
-import { Input } from "../ui/input";
+import Input from "../ui/input";
 import axios from "axios";
 import { searchProduct } from "/store/shopSlice";
 
