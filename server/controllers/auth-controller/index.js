@@ -94,12 +94,14 @@ export const loginUser = async (req, res) => {
       process.env.SECRET
     );
 
-    res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-      })
-      .json({ success: true, message: "Login successfull", isUser });
+    // res
+    //   .cookie("token", token, {
+    //     httpOnly: true,
+    //     secure: true,
+    //   })
+    //   .json({ success: true, message: "Login successfull", isUser });
+
+    res.jso({success:true,message:"Login Successfull",token,isUser})
   } catch (err) {
     console.log(err);
     res.json({ success: false, message: "Something went wrong" });
@@ -117,8 +119,27 @@ export const logOutUser = async (req, res) => {
   }
 };
 
+// export const checkLogin = async (req, res) => {
+//   const token = req.cookies.token;
+//   if (token) {
+//     try {
+//       const decoded = jwt.verify(token, process.env.SECRET);
+//       if (!decoded)
+//         return res.json({ success: false, message: "UnAuthenticated user" });
+
+//       return res.json({ success: true, message: "Already Login", decoded });
+//     } catch (err) {
+//       console.log(err);
+//       return res.json({ success: false, message: "Something went wrong" });
+//     }
+//   }else{
+//     return res.json({success:false,message:"Not logged in"})
+//   }
+// };
+
 export const checkLogin = async (req, res) => {
-  const token = req.cookies.token;
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.SECRET);

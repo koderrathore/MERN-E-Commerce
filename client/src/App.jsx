@@ -28,7 +28,8 @@ const App = () => {
   );
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(checkLogin())
+    const token = JSON.parse(sessionStorage.getItem("token"));
+    dispatch(checkLogin(token))
       .then((data) => {
         dispatch(cartProducts());
       })

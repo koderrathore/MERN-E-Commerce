@@ -44,6 +44,7 @@ import { removeItem } from "/store/cartSlice";
 import Input from "../ui/input";
 import axios from "axios";
 import { searchProduct } from "/store/shopSlice";
+import { resetTokenAndCredentials } from "/store/authSlice";
 
 const ShoppingHeader = () => {
   const { userName } = useSelector((state) => state.auth);
@@ -81,16 +82,23 @@ const ShoppingHeader = () => {
   };
 
   const handleLogOut = () => {
-    dispatch(authLogOut())
-      .then((data) => {
-        if (data) {
-          console.log(data);
-          toast({
-            title: data.payload.data?.message,
-          });
-        }
-      })
-      .catch((err) => console.log(err));
+    dispatch(resetTokenAndCredentials());
+    sessionStorage.removeItem("token");
+    sessionStorage.clear()
+    navigate("/auth/login");
+    toast({
+      title: "Logged out successfully",
+    });
+    // dispatch(authLogOut())
+    //   .then((data) => {
+    //     if (data) {
+    //       console.log(data);
+    //       toast({
+    //         title: data.payload.data?.message,
+    //       });
+    //     }
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   const handleCart = () => {
