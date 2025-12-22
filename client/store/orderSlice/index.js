@@ -108,8 +108,8 @@ const ordersSlice = createSlice({
     builder.addCase(allOrders.fulfilled, (state, action) => {
       console.log(action);
       state.isLoading = false;
-      state.orders = action.payload.data.success
-        ? action.payload.data.allOrders
+      state.orders = action?.payload?.data?.success
+        ? action?.payload?.data?.allOrders
         : null;
     });
     builder.addCase(allOrders.rejected, (state, action) => {
@@ -123,8 +123,8 @@ const ordersSlice = createSlice({
     builder.addCase(allOrdersForAdmin.fulfilled, (state, action) => {
       console.log(action);
       state.isLoading = false;
-      state.allOrders = action.payload.data.success
-        ? action.payload.data.allOrders
+      state.allOrders = action?.payload?.data?.success
+        ? action?.payload?.data?.allOrders
         : null;
     });
     builder.addCase(allOrdersForAdmin.rejected, (state, action) => {

@@ -31,10 +31,9 @@ export const addAddress = async (req, res) => {
 };
 
 export const fetchAddress = async (req, res) => {
-  const token = req.cookies.token;
-  const decoded = jwt.verify(token, process.env.SECRET);
+  const {userId} = req.params;
   try {
-    const address = await Address.find({ userId: decoded.id });
+    const address = await Address.find({ userId });
     if (!address)
       return res.json({ success: false, message: "No address found" });
 

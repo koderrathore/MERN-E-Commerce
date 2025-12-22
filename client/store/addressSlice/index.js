@@ -12,9 +12,9 @@ export const addAddress = createAsyncThunk("add/address", async (formData) => {
   return { data };
 });
 
-export const fetchAddress = createAsyncThunk("add/fetch", async () => {
+export const fetchAddress = createAsyncThunk("add/fetch", async (userId) => {
   const { data } = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/address/get-address`,
+          `${import.meta.env.VITE_API_URL}/api/address/get-address/:${userId}`,
 
     {
       withCredentials: true,
@@ -62,8 +62,8 @@ const addressSlice = createSlice({
     });
     builder.addCase(addAddress.fulfilled, (state, action) => {
       (state.isLoading = true), console.log(action);
-      state.addressList = action?.payload.data.success
-        ? action.payload.data?.newAddress
+      state?.addressList = action?.payload?.data?.success
+        ? action?.payload?.data?.newAddress
         : null;
     });
     builder.addCase(addAddress.rejected, (state, action) => {
@@ -76,8 +76,8 @@ const addressSlice = createSlice({
     builder.addCase(fetchAddress.fulfilled, (state, action) => {
       (state.isLoading = true), 
       console.log(action);
-      state.addressList = action.payload.data.success
-        ? action.payload.data?.address
+      state.addressList = action?.payload?.data?.success
+        ? action?.payload?.data?.address
         : null;
     });
     builder.addCase(fetchAddress.rejected, (state, action) => {

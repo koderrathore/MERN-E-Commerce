@@ -103,20 +103,20 @@ export const authSlice = createSlice({
     builder.addCase(authLogin.fulfilled, (state, action) => {
       state.isLoading = false;
       console.log(action);
-      state.isAuthenticated = action.payload.data.success;
-      state.user = action.payload.data.success
-        ? action.payload.data.isUser.role
+      state.isAuthenticated = action?.payload?.data.success;
+      state.user = action?.payload?.data.success
+        ? action?.payload?.data?.isUser?.role
         : null;
-      state.userName = action.payload.data?.isUser?.username;
-      state.userId = action.payload.data.success
-        ? action.payload.data.isUser._id
+      state.userName = action?.payload?.data?.isUser?.username;
+      state.userId = action?.payload?.data.success
+        ? action?.payload?.data?.isUser?._id
         : null;
-      state.token = action.payload.data.success
-        ? action.payload.data.token
+      state.token = action?.payload?.data.success
+        ? action?.payload?.data?.token
         : null;
       sessionStorage.setItem(
         "token",
-        JSON.stringify(action.payload.data.token)
+        JSON.stringify(action?.payload?.data?.token)
       );
       // const token = action.payload.data.token;
       // sessionStorage.setItem("token", token);
@@ -133,13 +133,13 @@ export const authSlice = createSlice({
     builder.addCase(checkLogin.fulfilled, (state, action) => {
       state.isLoading = false;
       console.log(action);
-      state.isAuthenticated = action.payload.data.success || false;
-      state.userName = action.payload.data?.decoded?.username;
-      state.user = action.payload.data.success
-        ? action.payload.data.decoded.role
+      state.isAuthenticated = action?.payload?.data.success || false;
+      state.userName = action?.payload?.data?.decoded?.username;
+      state.user = action?.payload?.data.success
+        ? action?.payload?.data.decoded.role
         : null;
-      state.userId = action.payload.data.success
-        ? action.payload.data.decoded.id
+      state.userId = action?.payload?.data.success
+        ? action?.payload?.data.decoded.id
         : null;
     });
     builder.addCase(checkLogin.rejected, (state, action) => {

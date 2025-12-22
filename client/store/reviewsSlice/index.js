@@ -62,7 +62,7 @@ const reviewsSlice = createSlice({
     builder.addCase(productReview.fulfilled, (state, action) => {
       console.log(action);
       state.isLoading = false;
-      state.reviews = action.payload?.success?action.payload?.review:[];
+      state.reviews = action?.payload?.success?action.payload?.review:[];
     });
     builder.addCase(productReview.rejected, (state, action) => {
       console.log(action);

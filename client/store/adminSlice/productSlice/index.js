@@ -78,8 +78,8 @@ export const adminProductSlice = createSlice({
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
       state.isLoading = false;
       console.log(action);
-      state.productList = action.payload.success
-        ? action.payload?.allProducts
+      state.productList = action?.payload?.success
+        ? action?.payload?.allProducts
         : null;
     });
     builder.addCase(fetchProducts.rejected, (state, action) => {

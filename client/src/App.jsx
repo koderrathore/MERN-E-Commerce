@@ -23,7 +23,7 @@ import { allOrders } from "/store/orderSlice";
 import { allOrdersForAdmin } from "/store/orderSlice";
 
 const App = () => {
-  const { isAuthenticated, user, isLoading } = useSelector(
+  const { isAuthenticated, user, userId, isLoading } = useSelector(
     (state) => state.auth
   );
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const App = () => {
 
     dispatch(fetchShoppingProducts()).then((data) => console.log(data));
 
-    dispatch(fetchAddress())
+    dispatch(fetchAddress(userId))
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
 
@@ -50,7 +50,6 @@ const App = () => {
       .catch((err) => console.log(err));
   }, [dispatch]);
 
-  const { userId } = useSelector((state) => state.auth);
   console.log(userId);
   return (
     <div className=" w-screen h-screen">

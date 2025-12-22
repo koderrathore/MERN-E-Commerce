@@ -65,9 +65,9 @@ const cartSLice = createSlice({
     });
     builder.addCase(addToCart.fulfilled, (state, action) => {
       (state.isLoading = true), console.log(action);
-      state.cart = action.payload.data.succes
-        ? action.payload.data?.createCart ||
-          action.payload.data?.alreadyHaveCart
+      state.cart = action?.payload?.data?.success
+        ? action?.payload?.data?.createCart ||
+          action?.payload?.data?.alreadyHaveCart
         : null;
     });
     builder.addCase(addToCart.rejected, (state, action) => {
@@ -79,9 +79,9 @@ const cartSLice = createSlice({
     });
     builder.addCase(cartProducts.fulfilled, (state, action) => {
       (state.isLoading = false),
-        console.log(action.payload.data.cartProducts[0]?.items);
-      state.cart = action.payload.data.success
-        ? action.payload.data.cartProducts[0]?.items
+        console.log(action?.payload?.data?.cartProducts[0]?.items);
+      state.cart = action?.payload?.data?.success
+        ? action?.payload?.data?.cartProducts[0]?.items
         : null;
     });
     builder.addCase(cartProducts.rejected, (state, action) => {
