@@ -97,7 +97,7 @@ export const loginUser = async (req, res) => {
     res
       .cookie("token", token, {
         httpOnly: true,
-        secure: false,
+        secure: true,
       })
       .json({ success: true, message: "Login successfull", isUser });
   } catch (err) {
