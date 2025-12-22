@@ -21,7 +21,7 @@ const Register = () => {
       .then((data) =>{
         if(data){
           toast({
-          title:data.payload.data.message
+          title:"Registration Successfull"
           })
           setUsername("")
           setPassword("")
