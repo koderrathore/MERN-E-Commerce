@@ -110,7 +110,7 @@ export const authSlice = createSlice({
         ? action.payload.data.isUser._id
         : null;
       state.token=action.payload.data.success?action.payload.data.token:null;
-      sessionStorage.setItem("token",action.payload.data.token);  
+      sessionStorage.setItem("token",JSON.stringify(action.payload?.data?.token));  
     });
     builder.addCase(authLogin.rejected, (state) => {
       state.isLoading = false;
