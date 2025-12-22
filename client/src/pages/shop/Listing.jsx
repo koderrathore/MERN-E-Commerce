@@ -278,7 +278,7 @@ const Listing = ({ tick }) => {
                                 );
                               })}
                             </div>
-                            <input
+                            <Input
                               type="text"
                               placeholder="Write review here"
                               value={review}
