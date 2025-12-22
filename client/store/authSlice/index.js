@@ -38,12 +38,11 @@ export const checkLogin = createAsyncThunk("/auth/check-login", async () => {
     `${import.meta.env.VITE_API_URL}/api/auth/check-login`,
     {
       withCredentials: true,
-      headers:{
-        Authorization:`Bearer ${sessionStorage.getItem("token")}`,
-        "Cache-Control":"no-cache,no-store,must-revalidate,proxy-revalidate"
-      }
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Cache-Control": "no-cache,no-store,must-revalidate,proxy-revalidate",
+      },
     }
-
   );
   return { data };
 });
@@ -64,7 +63,7 @@ const initialState = {
   user: null,
   userName: null,
   userId: null,
-  token:null
+  token: null,
 };
 
 export const authSlice = createSlice({
@@ -75,7 +74,7 @@ export const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       state.user = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     //REGISTER
@@ -109,14 +108,19 @@ export const authSlice = createSlice({
       state.userId = action.payload.data.success
         ? action.payload.data.isUser._id
         : null;
-      state.token=action.payload.data.success?action.payload.data.token:null;
-      sessionStorage.setItem("token",JSON.stringify(action.payload?.data?.token));  
+      state.token = action.payload.data.success
+        ? action.payload.data.token
+        : null;
+      sessionStorage.setItem(
+        "token",
+        JSON.stringify(action.payload?.data?.token)
+      );
     });
     builder.addCase(authLogin.rejected, (state) => {
       state.isLoading = false;
       state.isAuthenticated = false;
       state.user = null;
-      state.token=null;
+      state.token = null;
     });
     builder.addCase(checkLogin.pending, (state) => {
       state.isLoading = true;
@@ -153,5 +157,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const {resetTokenAndCredentials} = authSlice.actions;
+export const { resetTokenAndCredentials } = authSlice.actions;
 export default authSlice.reducer;
