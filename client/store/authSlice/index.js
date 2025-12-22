@@ -36,8 +36,6 @@ export const authLogin = createAsyncThunk("/auth/login", async (formData) => {
 export const checkLogin = createAsyncThunk(
   "/auth/check-login",
   async (token) => {
-    const token = sessionStorage.getItem("token");
-
     const { data } = await axios.get(
       `${import.meta.env.VITE_API_URL}/api/auth/check-login`,
       {
