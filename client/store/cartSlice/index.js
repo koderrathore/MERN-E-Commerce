@@ -79,9 +79,9 @@ const cartSLice = createSlice({
     });
     builder.addCase(cartProducts.fulfilled, (state, action) => {
       (state.isLoading = false),
-        console.log(action?.payload?.data?.cartProducts[0]?.items);
+        console.log(action?.payload?.data?.cartProducts?.[0]?.items);
       state.cart = action?.payload?.data?.success
-        ? action?.payload?.data?.cartProducts[0]?.items
+        ? action?.payload?.data?.cartProducts?.[0]?.items
         : null;
     });
     builder.addCase(cartProducts.rejected, (state, action) => {
