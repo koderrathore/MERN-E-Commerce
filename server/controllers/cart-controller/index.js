@@ -99,12 +99,12 @@ export const updateQuantity = async (req, res) => {
 
 export const removeItem = async (req, res) => {
   const { productId,userId } = req.body;
-  if (!productId && !userId)
+  if (!productId || !userId)
     return res.json({ success: false, message: "ProductId and UserId not found" });
 
   try {
     const deleted = await Cart.updateOne(
-      { userId },
+      {userId},
       { $pull: { items: { products: productId } } }
     );
 

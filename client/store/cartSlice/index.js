@@ -36,7 +36,7 @@ export const updateQuantity = createAsyncThunk(
 
 export const removeItem = createAsyncThunk(
   "cart/delete",
-  async (productId,userId) => {
+  async ({productId,userId}) => {
     const { data } = await axios.delete(
       `${import.meta.env.VITE_API_URL}/api/cart/remove-item`,
       {
