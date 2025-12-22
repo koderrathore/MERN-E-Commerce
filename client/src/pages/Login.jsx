@@ -16,7 +16,7 @@ const Login = () => {
       .then((data) => {
         if (data) {
           toast({
-            title: data.payload.data.message,
+            title:"Login Succesfull",
           });
           setEmail("")
           setPassword("")
