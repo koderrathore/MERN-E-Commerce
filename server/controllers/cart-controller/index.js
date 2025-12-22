@@ -46,7 +46,6 @@ export const addToCart = async (req, res) => {
       res.json({ success: true, message: "Item added", alreadyHaveCart });
     }
   } catch (err) {
-    console.log(err);
     res.json({ success: false, message: "Something went wrong" });
   }
 };
@@ -65,7 +64,6 @@ export const cartProducts = async (req, res) => {
       items,
     });
   } catch (err) {
-    console.log(err);
     res.json({ success: false, message: "Something went wrong" });
   }
 };
@@ -95,7 +93,6 @@ export const updateQuantity = async (req, res) => {
 
     res.json({ success: true, message: "updated", gotem });
   } catch (err) {
-    console.log(err);
     res.json({ success: false, message: "Something went wrong" });
   }
 };
@@ -123,7 +120,6 @@ export const removeItem = async (req, res) => {
 
     res.json({ success: true, message: "Item removed", deleted });
   } catch {
-    console.log(err);
     res.json({ success: false, message: "Something went wrong" });
   }
 };
