@@ -84,7 +84,7 @@ const ShoppingHeader = () => {
   const handleLogOut = () => {
     dispatch(resetTokenAndCredentials());
     sessionStorage.removeItem("token");
-    sessionStorage.clear()
+    sessionStorage.clear();
     navigate("/auth/login");
     toast({
       title: "Logged out successfully",
@@ -338,7 +338,7 @@ const ShoppingHeader = () => {
                                       state: { CheckOutProduct: [e] },
                                     });
                                   }}
-                                  disabled={isLoading}
+                                  disabled={isLoading || !cart?.length > 0}
                                   className="w-20 h-8"
                                 >
                                   check out
@@ -374,7 +374,7 @@ const ShoppingHeader = () => {
                           setOpenCart(false);
                           setOpenDialog(false);
                         }}
-                        disabled={isLoading}
+                        disabled={isLoading || !cart?.length > 0}
                         className="text-xl"
                       >
                         check out
@@ -552,9 +552,9 @@ const ShoppingHeader = () => {
                           </div>
                           <div className="flex flex-col gap-1">
                             <Button
-                            disabled={isLoading}
+                              disabled={isLoading || !cart?.length > 0}
                               onClick={() => {
-                                setOpenCart(false)
+                                setOpenCart(false);
                                 navigate("/shop/checkOut", {
                                   state: { CheckOutProduct: [e] },
                                 });
@@ -587,11 +587,11 @@ const ShoppingHeader = () => {
                     </span>
                   </div>
                   <Button
-                      disabled={isLoading||!cart?.length>0}
+                    disabled={isLoading || !cart?.length > 0}
                     onClick={() => {
-                      setOpenCart(false)
-                      navigate("/shop/checkOut",{
-                            state: { CheckOutProduct: cart },
+                      setOpenCart(false);
+                      navigate("/shop/checkOut", {
+                        state: { CheckOutProduct: cart },
                       });
                     }}
                     className=" text-xl w-fit"
