@@ -93,11 +93,9 @@ export const paymentVerification = async (req, res) => {
 };
 
 export const allOrders = async (req, res) => {
-  const token = req.cookies.token;
-  const decoded = jwt.verify(token, process.env.SECRET);
-  const { userId } = req.body;
+  const { userId } = req.params;
   try {
-    const allOrders = await Orders.find({ userId: decoded.id })
+    const allOrders = await Orders.find({ userId })
       .populate("items.productId")
       .populate("addressInfo");
     if (!allOrders)

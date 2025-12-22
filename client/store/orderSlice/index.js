@@ -20,9 +20,8 @@ export const createOrder = createAsyncThunk(
   "/orders/create",
   async (amount) => {
     const { data } = await axios.post(
-              `${import.meta.env.VITE_API_URL}/api/orders/create`
+      `${import.meta.env.VITE_API_URL}/api/orders/create`,
 
-      ,
       amount,
       { withCredentials: true }
     );
@@ -34,10 +33,8 @@ export const allOrders = createAsyncThunk(
   "/orders/all-orders",
   async (userId) => {
     const { data } = await axios.post(
-              `${import.meta.env.VITE_API_URL}/api/orders/all-orders`
+      `${import.meta.env.VITE_API_URL}/api/orders/all-orders/${userId}`,
 
-      ,
-      userId,
       { withCredentials: true }
     );
     return { data };
@@ -48,9 +45,8 @@ export const allOrdersForAdmin = createAsyncThunk(
   "/orders/all-orders-for-admin",
   async () => {
     const { data } = await axios.get(
-              `${import.meta.env.VITE_API_URL}/api/orders/all-orders-for-admin`
+      `${import.meta.env.VITE_API_URL}/api/orders/all-orders-for-admin`,
 
-      ,
       { withCredentials: true }
     );
     return { data };
@@ -62,9 +58,8 @@ export const updateOrderStatus = createAsyncThunk(
   async ({ orderStatus, id }) => {
     console.log(orderStatus, id);
     const { data } = await axios.put(
-              `${import.meta.env.VITE_API_URL}/api/orders/update-order-status`
+      `${import.meta.env.VITE_API_URL}/api/orders/update-order-status`,
 
-      ,
       { orderStatus, id },
       { withCredentials: true }
     );
