@@ -6,7 +6,8 @@ import Products from "../../models/products-model/index.js";
 dotenv.config();
 
 export const addToCart = async (req, res) => {
-  const { productId,userId } = req.body;
+  const { productId} = req.body;
+  const { userId} = req.params;
 
   if (!productId || !userId)
     return res.json({ success: false, message: "Invalid credentials" });

@@ -4,9 +4,9 @@ import { act } from "react";
 
 export const addToCart = createAsyncThunk("/cart/add", async ({productId,userId}) => {
   const { data } = await axios.post(
-    `${import.meta.env.VITE_API_URL}/api/cart/add-to-cart`,
+    `${import.meta.env.VITE_API_URL}/api/cart/add-to-cart/${userId}`,
 
-    { productId, userId },
+    productId,
     { withCredentials: true }
   );
   return { data };
