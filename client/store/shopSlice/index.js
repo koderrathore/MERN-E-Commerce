@@ -18,7 +18,7 @@ export const searchProduct = createAsyncThunk(
   async (search) => {
     console.log(search);
     const { data } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/shop/search/:${search}`,
+      `${import.meta.env.VITE_API_URL}/api/shop/search/${search}`,
 
       { withCredentials: true }
     );

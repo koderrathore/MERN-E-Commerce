@@ -14,7 +14,7 @@ export const addAddress = createAsyncThunk("add/address", async (formData) => {
 
 export const fetchAddress = createAsyncThunk("add/fetch", async (userId) => {
   const { data } = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/address/get-address/:${userId}`,
+          `${import.meta.env.VITE_API_URL}/api/address/get-address/${userId}`,
 
     {
       withCredentials: true,
