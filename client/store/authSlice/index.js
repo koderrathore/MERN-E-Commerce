@@ -109,8 +109,8 @@ export const authSlice = createSlice({
       state.userId = action.payload.data.success
         ? action.payload.data.isUser._id
         : null;
-      state.token=action.payload.data.success?action.payload.data.token:null;
-      sessionStorage.setItem("token",action.payload.data.token);  
+      state.token=action.payload.success?action.payload.token:null;
+      sessionStorage.setItem("token",action.payload.token);  
     });
     builder.addCase(authLogin.rejected, (state) => {
       state.isLoading = false;

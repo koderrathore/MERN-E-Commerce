@@ -101,7 +101,7 @@ export const loginUser = async (req, res) => {
     //   })
     //   .json({ success: true, message: "Login successfull", isUser });
 
-    res.jso({success:true,message:"Login Successfull",token,isUser})
+    res.json({success:true,message:"Login Successfull",token,isUser})
   } catch (err) {
     console.log(err);
     res.json({ success: false, message: "Something went wrong" });
