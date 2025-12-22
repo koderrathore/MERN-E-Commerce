@@ -47,8 +47,6 @@ const App = () => {
         .catch((err) => console.log(err));
       dispatch(cartProducts(userId));
 
-      dispatch(allOrders(userId));
-
       dispatch(allOrdersForAdmin())
         .then((data) => console.log(data))
         .catch((err) => console.log(err));
