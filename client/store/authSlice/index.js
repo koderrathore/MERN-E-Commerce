@@ -33,19 +33,24 @@ export const authLogin = createAsyncThunk("/auth/login", async (formData) => {
 //   return { data };
 // });
 
-export const checkLogin = createAsyncThunk("/auth/check-login", async () => {
-  const { data } = await axios.get(
-    `${import.meta.env.VITE_API_URL}/api/auth/check-login`,
-    {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Cache-Control": "no-cache,no-store,must-revalidate,proxy-revalidate",
-      },
-    }
-  );
-  return { data };
-});
+export const checkLogin = createAsyncThunk(
+  "/auth/check-login",
+  async (token) => {
+    const token = sessionStorage.getItem("token");
+
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_API_URL}/api/auth/check-login`,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Cache-Control": "no-cache,no-store,must-revalidate,proxy-revalidate",
+        },
+      }
+    );
+    return { data };
+  }
+);
 
 export const authLogOut = createAsyncThunk("/auth/logOut", async () => {
   const { data } = await axios.get(
@@ -113,8 +118,10 @@ export const authSlice = createSlice({
         : null;
       sessionStorage.setItem(
         "token",
-        JSON.stringify(action.payload?.data?.token)
+        JSON.stringify(action.payload.data.token)
       );
+      // const token = action.payload.data.token;
+      // sessionStorage.setItem("token", token);
     });
     builder.addCase(authLogin.rejected, (state) => {
       state.isLoading = false;
