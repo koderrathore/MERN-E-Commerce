@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Form, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { input } from "@/components/ui/input";
+import { Input } from "@/components/ui/Input";
 import { Separator } from "@/components/ui/separator";
 import { useDispatch, useSelector } from "react-redux";
 import { addAddress } from "/store/addressSlice";
@@ -426,7 +426,7 @@ const CheckOut = () => {
                   <div className="flex flex-col gap-1">
                     <h1>Adress</h1>
 
-                    <input
+                    <Input
                       value={address}
                       onChange={(e) => {
                         setAddress(e.target.value);
@@ -440,7 +440,7 @@ const CheckOut = () => {
                   <Separator />
                   <div className="flex flex-col gap-1">
                     <h1>City</h1>
-                    <input
+                    <Input
                       value={city}
                       onChange={(e) => {
                         setCity(e.target.value);
@@ -455,7 +455,7 @@ const CheckOut = () => {
 
                   <div className="flex flex-col gap-1">
                     <h1>PinCode</h1>
-                    <input
+                    <Input
                       value={pinCode}
                       onChange={(e) => {
                         setPinCode(e.target.value);
@@ -470,7 +470,7 @@ const CheckOut = () => {
 
                   <div className="flex flex-col gap-1">
                     <h1>Phone No.</h1>
-                    <input
+                    <Input
                       value={phone}
                       onChange={(e) => {
                         setPhone(e.target.value);
