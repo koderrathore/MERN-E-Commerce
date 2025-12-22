@@ -47,7 +47,7 @@ import { searchProduct } from "/store/shopSlice";
 import { resetTokenAndCredentials } from "/store/authSlice";
 
 const ShoppingHeader = () => {
-  const { userName,userId } = useSelector((state) => state.auth);
+  const { userName, userId } = useSelector((state) => state.auth);
   const { cart, isLoading } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const { toast } = useToast();
@@ -117,7 +117,7 @@ const ShoppingHeader = () => {
       updateQuantity({
         productId: e.products._id,
         quantity: quantity,
-        userId
+        userId,
       })
     )
       .then((data) => {
@@ -129,7 +129,7 @@ const ShoppingHeader = () => {
 
   const handleDeleteCartItem = (e) => {
     console.log(e);
-    dispatch(removeItem({ productId: e.products._id,userId }))
+    dispatch(removeItem({ productId: e.products._id, userId }))
       .then((data) => dispatch(cartProducts(userId)))
       .catch((err) => console.log(err));
   };
@@ -182,8 +182,11 @@ const ShoppingHeader = () => {
             </SheetHeader>
 
             <div className="p-4 text-xl gap-5 flex flex-col mt-8">
-              <Link to={"/shop/home"} className="cursor-pointer">
+              <Link
                 onClick={() => setOpenDialog(false)}
+                to={"/shop/home"}
+                className="cursor-pointer"
+              >
                 <h1 className="text-muted-foreground hover:text-foreground flex gap-1 items-center">
                   <House />
                   Home
