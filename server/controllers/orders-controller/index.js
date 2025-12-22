@@ -94,6 +94,8 @@ export const paymentVerification = async (req, res) => {
 
 export const allOrders = async (req, res) => {
   const { userId } = req.params;
+  if(!userId)
+    return res.json({ success: false, message: "Please provide userId" });
   try {
     const allOrders = await Orders.find({ userId })
       .populate("items.productId")
