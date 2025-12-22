@@ -24,7 +24,6 @@ export const cartProducts = createAsyncThunk("/cart/get", async (userId) => {
 export const updateQuantity = createAsyncThunk(
   "/cart/put",
   async ({ productId, quantity }) => {
-    console.log(productId, quantity);
     const { data } = await axios.put(
           `${import.meta.env.VITE_API_URL}/api/cart/update-quantity`,
 
@@ -79,7 +78,7 @@ const cartSLice = createSlice({
     });
     builder.addCase(cartProducts.fulfilled, (state, action) => {
       (state.isLoading = false),
-        console.log(action?.payload?.data?.cartProducts?.[0]?.items);
+        console.log("Cart "+ action?.payload?.data?.cartProducts?.[0]?.items);
       state.cart = action?.payload?.data?.success
         ? action?.payload?.data?.cartProducts?.[0]?.items
         : null;

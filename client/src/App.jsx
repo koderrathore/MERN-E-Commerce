@@ -45,7 +45,9 @@ const App = () => {
       dispatch(fetchAddress(userId))
         .then((data) => console.log(data))
         .catch((err) => console.log(err));
-      dispatch(cartProducts(userId));
+      dispatch(cartProducts(userId))
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err));
 
       dispatch(allOrders(userId));
 
@@ -53,8 +55,6 @@ const App = () => {
         .then((data) => console.log(data))
         .catch((err) => console.log(err));
     }
-
-    
   }, [dispatch, userId]);
 
   console.log(userId);
