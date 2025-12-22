@@ -39,11 +39,13 @@ const App = () => {
 
     dispatch(fetchShoppingProducts()).then((data) => console.log(data));
 
+    if (!userId) return;
+
     if (userId) {
       dispatch(fetchAddress(userId))
         .then((data) => console.log(data))
         .catch((err) => console.log(err));
- dispatch(cartProducts(userId));
+      dispatch(cartProducts(userId));
 
       dispatch(allOrders(userId));
 

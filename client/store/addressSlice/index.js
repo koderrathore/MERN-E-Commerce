@@ -62,7 +62,7 @@ const addressSlice = createSlice({
     });
     builder.addCase(addAddress.fulfilled, (state, action) => {
       (state.isLoading = true), console.log(action);
-      state?.addressList = action?.payload?.data?.success
+      state.addressList = action?.payload?.data?.success
         ? action?.payload?.data?.newAddress
         : null;
     });

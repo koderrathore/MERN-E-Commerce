@@ -32,9 +32,8 @@ export const createOrder = createAsyncThunk(
 export const allOrders = createAsyncThunk(
   "/orders/all-orders",
   async (userId) => {
-    const { data } = await axios.post(
+    const { data } = await axios.get(
       `${import.meta.env.VITE_API_URL}/api/orders/all-orders/${userId}`,
-
       { withCredentials: true }
     );
     return { data };
