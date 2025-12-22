@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { data, Route, Routes } from "react-router-dom";
 import AuthRegister from "./pages/Register";
 import AuthLogin from "./pages/Login";
 import AuthLayout from "./components/auth/layout";
@@ -27,28 +27,19 @@ const App = () => {
     (state) => state.auth
   );
   const dispatch = useDispatch();
-  useEffect(() => {
-    const token = JSON.parse(sessionStorage.getItem("token"));
-    dispatch(checkLogin(token))
-      .then((data) => {
-        dispatch(cartProducts());
-      })
-      .catch((err) => console.log(err));
-    if (isLoading)
-      return <Skeleton className="h-[800px] w-[400px] rounded-full" />;
+useEffect(() => {
+  dispatch(checkLogin());
+}, [dispatch]);
 
-    dispatch(fetchShoppingProducts()).then((data) => console.log(data));
-
-    dispatch(fetchAddress(userId))
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
-
+useEffect(() => {
+  if (userId) {
+    dispatch(fetchAddress(userId)).then((data) => {
+      console.log("Address fetched:", data);
+    });
+    dispatch(cartProducts());
     dispatch(allOrders(userId));
-
-    dispatch(allOrdersForAdmin())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
-  }, [dispatch]);
+  }
+}, [userId, dispatch]);
 
   console.log(userId);
   return (
