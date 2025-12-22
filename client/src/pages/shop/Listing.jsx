@@ -40,7 +40,7 @@ import {
 import { addToCart } from "/store/cartSlice";
 import { useToast } from "@/hooks/use-toast";
 import { Star } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import Input from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { addReviews } from "/store/reviewsSlice";
 import { productReview } from "/store/reviewsSlice";
