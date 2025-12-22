@@ -43,12 +43,13 @@ const Home = () => {
   const dispatch = useDispatch()
   const {toast} = useToast()
   const { productList } = useSelector((state) => state.shopProducts);
+  const { userId } = useSelector((state) => state.auth);
   console.log(productList);
   const [prodDets, setProdDets] = useState(null);
 
   const handleAddTOCart = (prod) => {
     console.log(prod);
-    dispatch(addToCart(prod._id))
+    dispatch(addToCart(prod._id,userId))
       .then((data) => {
         if (data.payload.data.success) {
           toast({
