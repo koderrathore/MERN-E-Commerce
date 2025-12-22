@@ -2,19 +2,22 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { act } from "react";
 
-export const addToCart = createAsyncThunk("/cart/add", async ({productId,userId}) => {
-  const { data } = await axios.post(
-    `${import.meta.env.VITE_API_URL}/api/cart/add-to-cart/${userId}`,
+export const addToCart = createAsyncThunk(
+  "/cart/add",
+  async ({ productId, userId }) => {
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/cart/add-to-cart/${userId}`,
 
-    productId,
-    { withCredentials: true }
-  );
-  return { data };
-});
+      productId,
+      { withCredentials: true }
+    );
+    return { data };
+  }
+);
 
 export const cartProducts = createAsyncThunk("/cart/get", async (userId) => {
   const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/cart/cart-products/${userId}`,
+    `${import.meta.env.VITE_API_URL}/api/cart/cart-products/${userId}`,
 
     { withCredentials: true }
   );
@@ -23,11 +26,11 @@ export const cartProducts = createAsyncThunk("/cart/get", async (userId) => {
 
 export const updateQuantity = createAsyncThunk(
   "/cart/put",
-  async ({ productId, quantity,userId }) => {
+  async ({ productId, quantity, userId }) => {
     const { data } = await axios.put(
-          `${import.meta.env.VITE_API_URL}/api/cart/update-quantity`,
+      `${import.meta.env.VITE_API_URL}/api/cart/update-quantity`,
 
-      { productId, quantity,userId },
+      { productId, quantity, userId },
       { withCredentials: true }
     );
     return { data };
@@ -36,11 +39,11 @@ export const updateQuantity = createAsyncThunk(
 
 export const removeItem = createAsyncThunk(
   "cart/delete",
-  async ({productId,userId}) => {
+  async ({ productId, userId }) => {
     const { data } = await axios.delete(
       `${import.meta.env.VITE_API_URL}/api/cart/remove-item`,
       {
-        data: { productId,userId },
+        data: { productId, userId },
         withCredentials: true,
       }
     );
@@ -78,7 +81,7 @@ const cartSLice = createSlice({
     });
     builder.addCase(cartProducts.fulfilled, (state, action) => {
       (state.isLoading = false),
-        console.log("Cart "+ action?.payload?.data?.cartProducts?.[0]?.items);
+        console.log("Cart " + action?.payload?.data?.cartProducts?.[0]?.items);
       state.cart = action?.payload?.data?.success
         ? action?.payload?.data?.cartProducts?.[0]?.items
         : null;

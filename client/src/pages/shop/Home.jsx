@@ -49,7 +49,7 @@ const Home = () => {
 
   const handleAddTOCart = (prod) => {
     console.log(prod);
-    dispatch(addToCart(prod._id,userId))
+    dispatch(addToCart({ productId: prod._id, userId }))
       .then((data) => {
         if (data.payload.data.success) {
           toast({
