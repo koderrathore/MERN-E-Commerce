@@ -1,22 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
-
 export const fetchShoppingProducts = createAsyncThunk(
-    "/shop/products",
-    async()=>{
-        const {data} = await axios.get("http://localhost:5000/api/shop/products",{withCredentials:true})
-        return {data}
-    }
-)
+  "/shop/products",
+  async () => {
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_API_URL}/api/shop/products`,
+
+      { withCredentials: true }
+    );
+    return { data };
+  }
+);
 
 export const searchProduct = createAsyncThunk(
   "/admin/search",
   async (search) => {
-    console.log(search)
+    console.log(search);
     const { data } = await axios.post(
-      `http://localhost:5000/api/shop/search/${search}`,
+      `${import.meta.env.VITE_API_URL}/api/shop/search/${search}`,
+
       { withCredentials: true }
     );
     return { data };
@@ -29,38 +32,42 @@ const initialState = {
 };
 
 const shoppingSlice = createSlice({
-    name:"shoppingProducts",
-    initialState,
-    reducers:{},
-    extraReducers:(builder)=>{
-          //fetchProducts
-            builder.addCase(fetchShoppingProducts.pending, (state) => {
-              state.isLoading = true;
-            });
-            builder.addCase(fetchShoppingProducts.fulfilled, (state, action) => {
-              state.isLoading = false;
-              console.log(action);
-              state.productList = action.payload.data?.success?action.payload.data?.allProducts:null;
-            });
-            builder.addCase(fetchShoppingProducts.rejected, (state, action) => {
-              state.isLoading = false;
-              console.log(action);
-              state.productList = null;
-            });
-            builder.addCase(searchProduct.pending, (state) => {
-              state.isLoading = true;
-            });
-            builder.addCase(searchProduct.fulfilled, (state, action) => {
-              state.isLoading = false;
-              console.log(action);
-              state.productList = action.payload.data?.success?action.payload.data?.result:null;
-            });
-            builder.addCase(searchProduct.rejected, (state, action) => {
-              state.isLoading = false;
-              console.log(action);
-              state.productList = null;
-            });
-    }
-}) 
+  name: "shoppingProducts",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    //fetchProducts
+    builder.addCase(fetchShoppingProducts.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(fetchShoppingProducts.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log(action);
+      state.productList = action.payload.data?.success
+        ? action.payload.data?.allProducts
+        : null;
+    });
+    builder.addCase(fetchShoppingProducts.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log(action);
+      state.productList = null;
+    });
+    builder.addCase(searchProduct.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(searchProduct.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log(action);
+      state.productList = action.payload.data?.success
+        ? action.payload.data?.result
+        : null;
+    });
+    builder.addCase(searchProduct.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log(action);
+      state.productList = null;
+    });
+  },
+});
 
-export default shoppingSlice.reducer
+export default shoppingSlice.reducer;

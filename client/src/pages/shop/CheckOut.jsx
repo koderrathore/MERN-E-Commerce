@@ -45,15 +45,15 @@ const CheckOut = () => {
   console.log(CheckOutProduct);
   const totalAmount =
     CheckOutProduct && CheckOutProduct.length > 0
-        ? CheckOutProduct?.reduce(
-            (acc, crr) =>
-              acc +
-              (crr?.products?.salePrice > 0
-                ? crr?.products?.salePrice
-                : crr?.products?.price) *
-                crr?.quantity,
-            0
-          )
+      ? CheckOutProduct?.reduce(
+          (acc, crr) =>
+            acc +
+            (crr?.products?.salePrice > 0
+              ? crr?.products?.salePrice
+              : crr?.products?.price) *
+              crr?.quantity,
+          0
+        )
       : cart && cart.length > 0
       ? cart?.reduce(
           (arr, crr) =>
@@ -157,7 +157,10 @@ const CheckOut = () => {
               setOrderId(response.razorpay_order_id);
               setPaymentId(response.razorpay_payment_id);
               const { data } = await axios.post(
-                "http://localhost:5000/api/orders/payment-verification",
+                `${
+                  import.meta.env.VITE_API_URL
+                }/api/orders/payment-verification`,
+
                 {
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_order_id: response.razorpay_order_id,
@@ -165,7 +168,7 @@ const CheckOut = () => {
                   userDet: {
                     selectedAddress,
                     userId,
-                    item:CheckOutProduct,
+                    item: CheckOutProduct,
                     totalAmount,
                     orderId,
                     paymentId,
@@ -173,13 +176,13 @@ const CheckOut = () => {
                 },
                 { withCredentials: true }
               );
-              console.log(data)
-              if(data.success){
-                toast({title:"Ordered"})
-                data.newOrder.items.map((e)=>{
-                  dispatch(removeItem({productId:e.productId}))
-                })
-                navigate("/shop/home")
+              console.log(data);
+              if (data.success) {
+                toast({ title: "Ordered" });
+                data.newOrder.items.map((e) => {
+                  dispatch(removeItem({ productId: e.productId }));
+                });
+                navigate("/shop/home");
               }
             },
 
@@ -221,9 +224,7 @@ const CheckOut = () => {
               CheckOuts
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="orders">
-            
-          </TabsContent>
+          <TabsContent value="orders"></TabsContent>
           <TabsContent value="CheckOuts" className="lg:flex-row flex-wrap">
             <div className="px-2 lg:flex-row lg:flex-wrap">
               {addressList && addressList.length > 0 ? (

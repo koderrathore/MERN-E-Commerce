@@ -7,16 +7,22 @@ const initialState = {
 };
 
 export const getKey = createAsyncThunk("/orders/key", async () => {
-  const { data } = await axios.get("http://localhost:5000/api/orders/key", {
-    withCredentials: true,
-  });
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_API_URL}/api/orders/key`,
+
+    {
+      withCredentials: true,
+    }
+  );
   return { data };
 });
 export const createOrder = createAsyncThunk(
   "/orders/create",
   async (amount) => {
     const { data } = await axios.post(
-      "http://localhost:5000/api/orders/create",
+              `${import.meta.env.VITE_API_URL}/api/orders/create`
+
+      ,
       amount,
       { withCredentials: true }
     );
@@ -28,7 +34,9 @@ export const allOrders = createAsyncThunk(
   "/orders/all-orders",
   async (userId) => {
     const { data } = await axios.post(
-      "http://localhost:5000/api/orders/all-orders",
+              `${import.meta.env.VITE_API_URL}/api/orders/all-orders`
+
+      ,
       userId,
       { withCredentials: true }
     );
@@ -40,7 +48,9 @@ export const allOrdersForAdmin = createAsyncThunk(
   "/orders/all-orders-for-admin",
   async () => {
     const { data } = await axios.get(
-      "http://localhost:5000/api/orders/all-orders-for-admin",
+              `${import.meta.env.VITE_API_URL}/api/orders/all-orders-for-admin`
+
+      ,
       { withCredentials: true }
     );
     return { data };
@@ -52,7 +62,9 @@ export const updateOrderStatus = createAsyncThunk(
   async ({ orderStatus, id }) => {
     console.log(orderStatus, id);
     const { data } = await axios.put(
-      "http://localhost:5000/api/orders/update-order-status",
+              `${import.meta.env.VITE_API_URL}/api/orders/update-order-status`
+
+      ,
       { orderStatus, id },
       { withCredentials: true }
     );

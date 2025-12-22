@@ -6,7 +6,9 @@ export const addReviews = createAsyncThunk(
   async ({ user, productId, review, ratings }) => {
     console.log(user, productId, review, ratings);
     const { data } = await axios.post(
-      "http://localhost:5000/api/reviews/add-review",
+              `${import.meta.env.VITE_API_URL}/api/reviews/add-review`
+
+      ,
       { user, productId, review, ratings },
       { withCredentials: true }
     );
@@ -18,7 +20,9 @@ export const productReview = createAsyncThunk(
   "/reviews/product-review",
   async (productId) => {
     const { data } = await axios.post(
-      `http://localhost:5000/api/reviews/product-review`,
+                    `${import.meta.env.VITE_API_URL}/api/reviews/product-review`
+
+      ,
       
       productId,
       {

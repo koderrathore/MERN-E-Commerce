@@ -5,7 +5,7 @@ export const addProducts = createAsyncThunk(
   "/products/add",
   async (formData) => {
     const response = await axios.post(
-      "http://localhost:5000/api/admin/addProducts",
+      `${import.meta.env.VITE_API_URL}/api/admin/addProducts`,
       formData,
       {
         withCredentials: true,
@@ -19,7 +19,8 @@ export const addProducts = createAsyncThunk(
 
 export const fetchProducts = createAsyncThunk("/admin/get", async () => {
   const response = await axios.get(
-    "http://localhost:5000/api/admin/fetchProducts"
+    `${import.meta.env.VITE_API_URL}/api/admin/fetchProducts`,
+    { withCredentials: true }
   );
   return response?.data;
 });
@@ -28,7 +29,8 @@ export const updateProducts = createAsyncThunk(
   "/admin/update",
   async ({ id, formData }) => {
     const response = await axios.put(
-      `http://localhost:5000/api/admin/updateProducts/${id}`,
+      `${import.meta.env.VITE_API_URL}/api/admin/updateProducts/${id}`,
+
       formData,
       { withCredentials: true }
     );
@@ -38,13 +40,12 @@ export const updateProducts = createAsyncThunk(
 
 export const deleteProducts = createAsyncThunk("/admin/delete", async (id) => {
   const response = await axios.delete(
-    `http://localhost:5000/api/admin/deleteProducts/${id}`,
+    `${import.meta.env.VITE_API_URL}/api/admin/deleteProducts/${id}`,
+
     { withCredentials: true }
   );
   return response?.data;
 });
-
-
 
 const initialState = {
   isLoading: false,

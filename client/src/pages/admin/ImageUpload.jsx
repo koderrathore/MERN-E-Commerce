@@ -19,7 +19,8 @@ const ImageUpload = ({
   setEditProduct,
   imageEdited,
   setImageEdited,
-  loader, setLoader
+  loader,
+  setLoader,
 }) => {
   const imageRef = useRef(null);
   const [editURL, setEditURL] = useState(null);
@@ -55,10 +56,11 @@ const ImageUpload = ({
     const data = new FormData();
     data.append("image", imageFile);
     const response = await axios.post(
-      "http://localhost:5000/api/admin/upload-image",
+      `${import.meta.env.VITE_API_URL}/api/admin/upload-image`,
+
       data
     );
-    console.log(response)
+    console.log(response);
     if (response.data?.success) {
       setLoader(false);
       setUploadedImageFile(response.data.result?.url);
@@ -76,12 +78,11 @@ const ImageUpload = ({
 
   return (
     <div className="flex flex-col">
-      
-      {
-      loader?
-      <div className="h-28 w-68 rounded-lg bg-black text-white justify-center items-center flex">Image Upload...</div>
-      :
-      image&&imageEdited ? (
+      {loader ? (
+        <div className="h-28 w-68 rounded-lg bg-black text-white justify-center items-center flex">
+          Image Upload...
+        </div>
+      ) : image && imageEdited ? (
         <div className="flex">
           {imageEdited ? (
             <div className="h-28 w-32 lg:h-36 lg:w-40">
@@ -135,7 +136,7 @@ const ImageUpload = ({
           ) : (
             <div className="relative flex gap-2 items-center mt-1 h-28 w-68 overflow-hidden border-2 border-dotted border-black justify-center rounded-md px-2">
               <div className="flex justify-center items-center pl-2">
-                <FileIcon className="h-4 w-4"/>
+                <FileIcon className="h-4 w-4" />
                 <div className=" text-xs sm:text-lg flex justify-center items-center overflow-hidden ">
                   <h1>{imageFile?.name}</h1>
                 </div>

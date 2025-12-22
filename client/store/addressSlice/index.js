@@ -4,7 +4,8 @@ import axios from "axios";
 export const addAddress = createAsyncThunk("add/address", async (formData) => {
   console.log(formData);
   const { data } = await axios.post(
-    "http://localhost:5000/api/address/add-address",
+      `${import.meta.env.VITE_API_URL}/api/address/add-address`,
+
     formData,
     { withCredentials: true }
   );
@@ -13,7 +14,8 @@ export const addAddress = createAsyncThunk("add/address", async (formData) => {
 
 export const fetchAddress = createAsyncThunk("add/fetch", async () => {
   const { data } = await axios.get(
-    `http://localhost:5000/api/address/get-address`,
+          `${import.meta.env.VITE_API_URL}/api/address/get-address`,
+
     {
       withCredentials: true,
     }
@@ -23,7 +25,8 @@ export const fetchAddress = createAsyncThunk("add/fetch", async () => {
 
 export const deleteAddress = createAsyncThunk("add/fetch", async (addressId) => {
   const { data } = await axios.delete(
-    `http://localhost:5000/api/address/delete-address`,
+          `${import.meta.env.VITE_API_URL}/api/address/delete-address`,
+
     {data:addressId},
     {
       withCredentials: true,
@@ -34,7 +37,8 @@ export const deleteAddress = createAsyncThunk("add/fetch", async (addressId) => 
 
 export const editAddress = createAsyncThunk("add/edit", async (formData) => {
   const { data } = await axios.put(
-    `http://localhost:5000/api/address/edit-address`,
+          `${import.meta.env.VITE_API_URL}/api/address/edit-address`,
+
     formData,
     {
       withCredentials: true,
