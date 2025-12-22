@@ -122,7 +122,7 @@ const ShoppingHeader = () => {
     )
       .then((data) => {
         console.log(data);
-        dispatch(cartProducts());
+        dispatch(cartProducts(userId));
       })
       .catch((err) => console.log(err));
   };
