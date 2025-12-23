@@ -52,7 +52,7 @@ const Account = () => {
             setCity("");
             setPinCode("");
             setPhone("");
-            dispatch(fetchAddress());
+            dispatch(fetchAddress(userId));
           }
         })
         .catch((err) => console.log(err));
@@ -69,8 +69,7 @@ const Account = () => {
           setCity("");
           setPinCode("");
           setPhone("");
-          dispatch(fetchAddress());
-          dispatch(fetchAddress());
+          dispatch(fetchAddress(userId));
           setIsEdit(false);
         })
         .catch((err) => console.log(err));
@@ -107,10 +106,8 @@ const Account = () => {
 
   useEffect(() => {
     dispatch(fetchAddress(userId));
-    dispatch(allOrders(userId))
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
-  }, [dispatch,userId]);
+    dispatch(allOrders(userId));
+  }, [dispatch, userId]);
 
   const updateAddress = () => {};
 
@@ -139,17 +136,21 @@ const Account = () => {
               </div>
               <div className="flex gap-1">
                 <span>Order Status :</span>
-                <h1  className={`${
-                                dialog?.orderStatus == "delievered"
-                                  ? "text-green-600 "
-                                  : dialog?.orderStatus == "pending"
-                                  ? "text-black"
-                                  : dialog?.orderStatus == "shipped"
-                                  ? "text-blue-500"
-                                  : dialog?.orderStatus == "rejected"
-                                  ? "text-red-500"
-                                  : null
-                              }`}>{dialog?.orderStatus}</h1>
+                <h1
+                  className={`${
+                    dialog?.orderStatus == "delievered"
+                      ? "text-green-600 "
+                      : dialog?.orderStatus == "pending"
+                      ? "text-black"
+                      : dialog?.orderStatus == "shipped"
+                      ? "text-blue-500"
+                      : dialog?.orderStatus == "rejected"
+                      ? "text-red-500"
+                      : null
+                  }`}
+                >
+                  {dialog?.orderStatus}
+                </h1>
               </div>
             </div>
           </div>
@@ -265,14 +266,14 @@ const Account = () => {
                             <TableCell>{e?.orderDate}</TableCell>
                             <TableCell>{e?.amount}Rs.</TableCell>
                             <TableCell className="text-right pr-6">
-                               <Button
-                          onClick={() => {
-                            handleOrderDets(e);
-                          }}
-                          className="h-6 w-24 md:h-auto md:w-auto"
-                        >
-                          View Details
-                        </Button>
+                              <Button
+                                onClick={() => {
+                                  handleOrderDets(e);
+                                }}
+                                className="h-6 w-24 md:h-auto md:w-auto"
+                              >
+                                View Details
+                              </Button>
                             </TableCell>
                           </TableRow>
                         </>
