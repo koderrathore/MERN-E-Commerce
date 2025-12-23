@@ -7,7 +7,7 @@ import {
 } from "../../controllers/cart-controller/index.js";
 
 const router = express.Router();
-router.post("/add-to-cart/:userId", addToCart);
+router.post("/add-to-cart/:userId/:productId", addToCart);
 router.get("/cart-products/:userId", cartProducts);
 router.put("/update-quantity", updateQuantity);
 router.delete("/remove-item", removeItem);

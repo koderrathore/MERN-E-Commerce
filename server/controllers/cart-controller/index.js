@@ -6,11 +6,14 @@ import Products from "../../models/products-model/index.js";
 dotenv.config();
 
 export const addToCart = async (req, res) => {
-  const { productId} = req.body;
+  const { productId} = req.params;
   const { userId} = req.params;
 
-  if (!productId || !userId)
-    return res.json({ success: false, message: "Invalid credentials" });
+  if (!productId)
+    return res.json({ success: false, message: "ProductId Not Found" });
+
+  if (!userId)
+    return res.json({ success: false, message: "UserId Not Found" });
 
   try {
     const alreadyHaveCart = await Cart.findOne({ userId });
