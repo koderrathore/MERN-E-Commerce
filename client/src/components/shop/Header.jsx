@@ -341,6 +341,8 @@ const ShoppingHeader = () => {
                                     navigate("/shop/checkOut", {
                                       state: { CheckOutProduct: [e] },
                                     });
+                                    setOpenCart(false);
+                                    setOpenDialog(false)
                                   }}
                                   disabled={isLoading || !cart?.length > 0}
                                   className="w-20 h-8"
