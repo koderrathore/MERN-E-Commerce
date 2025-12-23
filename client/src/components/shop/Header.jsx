@@ -342,7 +342,7 @@ const ShoppingHeader = () => {
                                       state: { CheckOutProduct: [e] },
                                     });
                                     setOpenCart(false);
-                                    setOpenDialog(false)
+                                    setOpenDialog(false);
                                   }}
                                   disabled={isLoading || !cart?.length > 0}
                                   className="w-20 h-8"
@@ -401,7 +401,12 @@ const ShoppingHeader = () => {
                   <DropdownMenuLabel>Logged in as {userName}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <Link to={"/shop/account"}>
+                    <Link
+                      onClick={() => {
+                        setOpenDialog(false);
+                      }}
+                      to={"/shop/account"}
+                    >
                       <User />
                       Account
                     </Link>
