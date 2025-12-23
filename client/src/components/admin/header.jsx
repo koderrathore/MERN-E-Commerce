@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { authLogOut } from "/store/authSlice";
 import { useToast } from "@/hooks/use-toast";
 import { resetTokenAndCredentials } from "/store/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const AdminHeader = ({ setOpen }) => {
   const dispatch = useDispatch();
