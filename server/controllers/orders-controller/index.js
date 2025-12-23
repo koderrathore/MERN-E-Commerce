@@ -43,7 +43,6 @@ export const paymentVerification = async (req, res) => {
     razorpay_signature,
     userDet,
   } = req.body;
-  console.log(userDet);
   if (!razorpay_payment_id && !razorpay_order_id && !razorpay_signature)
     return res.json({ success: false, message: "Something went wrong" });
   const body = razorpay_order_id + "|" + razorpay_payment_id;
