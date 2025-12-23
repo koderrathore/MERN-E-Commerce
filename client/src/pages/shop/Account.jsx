@@ -106,11 +106,11 @@ const Account = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchAddress());
+    dispatch(fetchAddress(userId));
     dispatch(allOrders(userId))
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [dispatch,userId]);
 
   const updateAddress = () => {};
 
