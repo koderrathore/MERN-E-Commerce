@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addAddress } from "/store/addressSlice";
 import { useToast } from "@/hooks/use-toast";
 import { fetchAddress } from "/store/addressSlice";
-import { deleteAddress } from "/store/addressSlice";
 import { editAddress } from "/store/addressSlice";
 import { removeItem } from "/store/cartSlice";
 import { createOrder } from "/store/orderSlice";
@@ -79,7 +78,7 @@ const CheckOut = () => {
             setCity("");
             setPinCode("");
             setPhone("");
-            dispatch(fetchAddress());
+            dispatch(fetchAddress(userId));
           }
         })
         .catch((err) => console.log(err));
@@ -96,8 +95,7 @@ const CheckOut = () => {
           setCity("");
           setPinCode("");
           setPhone("");
-          dispatch(fetchAddress());
-          dispatch(fetchAddress());
+          dispatch(fetchAddress(userId));
           setIsEdit(false);
         })
         .catch((err) => console.log(err));
@@ -121,7 +119,7 @@ const CheckOut = () => {
 
   const handleDeleteCartItem = (e) => {
     console.log(e);
-    dispatch(removeItem({ productId: e.products._id }))
+    dispatch(removeItem({ productId: e.products._id,userId }))
       .then((data) => dispatch(cartProducts()))
       .catch((err) => console.log(err));
   };
@@ -180,7 +178,7 @@ const CheckOut = () => {
               if (data.success) {
                 toast({ title: "Ordered" });
                 data.newOrder.items.map((e) => {
-                  dispatch(removeItem({ productId: e.productId }));
+                  dispatch(removeItem({ productId: e.productId,userId }));
                 });
                 navigate("/shop/home");
               }
@@ -203,12 +201,12 @@ const CheckOut = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchAddress());
+    dispatch(fetchAddress(userId));
     if (CheckOutProduct) {
       setProductId(CheckOutProduct?._id);
       setQuantity(CheckOutProduct?.quantity);
     }
-  }, []);
+  }, [dispatch,userId]);
 
   return (
     <div className="h-screen w-[100%] flex flex-col">
