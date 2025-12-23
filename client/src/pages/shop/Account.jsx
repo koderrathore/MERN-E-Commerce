@@ -84,7 +84,7 @@ const Account = () => {
           toast({
             title: data.payload.data.message,
           });
-          dispatch(fetchAddress());
+          dispatch(fetchAddress(userId));
         }
       })
       .catch((err) => console.log(err));
