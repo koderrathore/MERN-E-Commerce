@@ -27,27 +27,27 @@ const ProductTile = ({
         <div className="flex w-20 h-28 overflow-hidden rounded-lg lg:w-52 lg:h-72">
           <img
             className="w-full h-full object-cover"
-            src={products.image}
+            src={products?.image}
             alt=""
           />
         </div>
         <h1 className="w-28 overflow-hidden h-5 lg:text-xl lg:h-8 lg:w-52">
-          {products.title}
+          {products?.title}
         </h1>
       </div>
       <div className="flex flex-col w-fit lg:text-xl">
-        <h1 className="uppercase">{products.brand}</h1>
+        <h1 className="uppercase">{products?.brand}</h1>
         <div className="flex font-semibold gap-2 ">
-          {products.salePrice == 0 ? (
-            <h1>{products.price}Rs.</h1>
+          {products?.salePrice == 0 ? (
+            <h1>{products?.price}Rs.</h1>
           ) : (
             <h1 className="text-red-600 divide-x relative line-through flex items-center">
-              {products.price}Rs.
+              {products?.price}Rs.
             </h1>
           )}
-          {products.salePrice == 0 ? null : <h1>{products.salePrice}Rs.</h1>}
+          {products?.salePrice == 0 ? null : <h1>{products?.salePrice}Rs.</h1>}
         </div>
-        <h1>in Stock: {products.totalStock}</h1>
+        <h1>in Stock: {products?.totalStock}</h1>
       </div>
 
       </div>

@@ -164,13 +164,13 @@ const Listing = ({ tick }) => {
 
   useEffect(() => {
     if (list.productList) {
-      setProductList(list.productList);
+      setProductList(list?.productList);
     }
   }, [list]);
 
   useEffect(() => {
     dispatch(fetchShoppingProducts()).then((data) => {
-      setProductList(data.payload.data?.allProducts);
+      setProductList(data?.payload.data?.allProducts);
       console.log(data);
     });
   }, [dispatch]);
@@ -183,14 +183,14 @@ const Listing = ({ tick }) => {
 
   const handleReviews = () => {
     console.log(review);
-    console.log(user, prodDets._id, review, ratings);
+    console.log(user, prodDets?._id, review, ratings);
     dispatch(addReviews({ user, productId: prodDets._id, review, ratings }))
       .then((data) => {
-        if (data.payload.data.success) {
-          toast({ title: data.payload.data.message });
+        if (data?.payload?.data?.success) {
+          toast({ title: data?.payload?.data?.message });
           setReview("");
           setRatings(1);
-          dispatch(productReview({ productId: prodDets._id }));
+          dispatch(productReview({ productId: prodDets?._id }));
         }
       })
       .catch((err) => console.log(err));
@@ -251,12 +251,12 @@ const Listing = ({ tick }) => {
           </div>
           <Separator />
 
-          <div className={`${reviews.length>0?"flex flex-col h-52 overflow-auto":"h-fit"}`}>
+          <div className={`${reviews?.length>0?"flex flex-col h-52 overflow-auto":"h-fit"}`}>
             {/* fff */}
             {/* fff */}
             {orders && orders?.length > 0 && !isLoading ? (
               orders?.map((e, i) =>
-                e.items && e.items.length > 0 && e.orderStatus == "delievered"
+                e?.items && e.items?.length > 0 && e?.orderStatus == "delievered"
                   ? e?.items?.map((k, j) =>
                       k?.productId?._id == prodDets?._id ? (
                         <>
@@ -320,14 +320,14 @@ const Listing = ({ tick }) => {
               <h1 className="text-2xl flex items-center gap-1 font-semibold">
                 Product reviews <ArrowDown />
               </h1>
-              {reviews && reviews.length > 0 ? (
+              {reviews && reviews?.length > 0 ? (
                 reviews.map((e, i) => {
                   return (
                     <div className="flex flex-col">
                       <div className="flex flex-col my-2">
                         <h1 className="flex gap-2 items-center font-semibold uppercase py-1">
                           <span className="w-fit h-full py-1 px-3 rounded-full bg-black text-white">
-                            {e.userId.username?.[0]}
+                            {e?.userId?.username?.[0]}
                           </span>
                           <span className="">{e.userId.username}</span>
                         </h1>

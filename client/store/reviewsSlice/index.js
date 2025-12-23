@@ -6,9 +6,8 @@ export const addReviews = createAsyncThunk(
   async ({ user, productId, review, ratings }) => {
     console.log(user, productId, review, ratings);
     const { data } = await axios.post(
-              `${import.meta.env.VITE_API_URL}/api/reviews/add-review`
+      `${import.meta.env.VITE_API_URL}/api/reviews/add-review`,
 
-      ,
       { user, productId, review, ratings },
       { withCredentials: true }
     );
@@ -20,10 +19,8 @@ export const productReview = createAsyncThunk(
   "/reviews/product-review",
   async (productId) => {
     const { data } = await axios.post(
-                    `${import.meta.env.VITE_API_URL}/api/reviews/product-review`
+      `${import.meta.env.VITE_API_URL}/api/reviews/product-review`,
 
-      ,
-      
       productId,
       {
         withCredentials: true,
@@ -62,7 +59,7 @@ const reviewsSlice = createSlice({
     builder.addCase(productReview.fulfilled, (state, action) => {
       console.log(action);
       state.isLoading = false;
-      state.reviews = action?.payload?.success?action.payload?.review:[];
+      state.reviews = action?.payload?.success ? action.payload?.review : [];
     });
     builder.addCase(productReview.rejected, (state, action) => {
       console.log(action);
