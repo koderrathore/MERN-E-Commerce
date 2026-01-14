@@ -129,7 +129,7 @@ const ShoppingHeader = () => {
 
   const handleDeleteCartItem = (e) => {
     console.log(e);
-    dispatch(removeItem({ productId: e.products._id, userId }))
+    dispatch(removeItem({ productId: e?.products._id, userId }))
       .then((data) => dispatch(cartProducts(userId)))
       .catch((err) => console.log(err));
   };
@@ -326,12 +326,12 @@ const ShoppingHeader = () => {
                             <div className="flex flex-col justify-between pt-4 ml-10 mt-4">
                               <div className="flex flex-col gap-2">
                                 <h1 className="h-8 text-sm leading-3 w-auto font-semibold">
-                                  {e.products.title}
+                                  {e?.products?.title}
                                 </h1>
                                 <span className="text-black font-semibold ">
-                                  {e.products.salePrice > 0
-                                    ? e.products.salePrice * e.quantity
-                                    : e.products.price * e.quantity}
+                                  {e?.products?.salePrice > 0
+                                    ? e?.products?.salePrice * e?.quantity
+                                    : e?.products?.price * e?.quantity}
                                   Rs.
                                 </span>
                               </div>
