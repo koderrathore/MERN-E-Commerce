@@ -28,7 +28,7 @@ const App = () => {
   );
   const dispatch = useDispatch();
   useEffect(() => {
-    const token = JSON.parse(sessionStorage.getItem("token")||"null);
+    const token = JSON.parse(sessionStorage.getItem("token")||"null");
     dispatch(checkLogin(token))
       .then((data) => {
         console.log(data);
