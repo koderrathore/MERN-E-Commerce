@@ -114,10 +114,14 @@ export const authSlice = createSlice({
       state.token = action?.payload?.data.success
         ? action?.payload?.data?.token
         : null;
-      sessionStorage.setItem(
-        "token",
-        JSON.stringify(action?.payload?.data?.token)
-      );
+      const token = action?.payload?.data?.token;
+
+if (token) {
+  sessionStorage.setItem("token", JSON.stringify(token));
+} else {
+  sessionStorage.removeItem("token");
+}
+
       // const token = action.payload.data.token;
       // sessionStorage.setItem("token", token);
     });
