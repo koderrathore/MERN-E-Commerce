@@ -139,9 +139,9 @@ const ShoppingHeader = () => {
       ? cart?.reduce(
           (arr, crr) =>
             arr +
-            (crr.products.salePrice > 0
-              ? crr.products.salePrice
-              : crr.products.price) *
+            (crr?.products?.salePrice > 0
+              ? crr?.products?.salePrice
+              : crr?.products?.price) *
               crr.quantity,
           0
         )
