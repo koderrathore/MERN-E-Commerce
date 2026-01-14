@@ -552,12 +552,12 @@ const ShoppingHeader = () => {
                         <div className="flex flex-col justify-between pt-4 ml-10 mt-4 text-xl">
                           <div className="flex flex-col gap-0 text-xl justify-start items-start">
                             <h1 className=" leading-6 w-full font-semibold">
-                              {e.products.title}
+                              {e?.products?.title}
                             </h1>
                             <span className="text-black font-semibold ">
-                              {e.products.salePrice > 0
-                                ? e.products.salePrice * e.quantity
-                                : e.products.price * e.quantity}
+                              {e?.products?.salePrice > 0
+                                ? e.products?.salePrice * e?.quantity
+                                : e.products?.price * e?.quantity}
                               Rs.
                             </span>
                           </div>
