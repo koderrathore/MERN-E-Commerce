@@ -95,7 +95,6 @@ const AdminProducts = () => {
           toast({
             title: "something Went Wrong",
           });
-          console.log(err);
         });
     } else {
       setProductLoader(true);
@@ -144,7 +143,6 @@ const AdminProducts = () => {
           toast({
             title: "something Went Wrong",
           });
-          console.log(err);
         });
     }
   };
@@ -161,7 +159,6 @@ const AdminProducts = () => {
           setIsDetails(null);
           dispatch(fetchProducts());
         })
-        .catch((err) => console.log(err));
     };
 
     if (isDelete) handleDelete();
@@ -170,19 +167,16 @@ const AdminProducts = () => {
   useEffect(() => {
     dispatch(fetchProducts())
       .then((data) => {
-        console.log(data)
         if (!data.payload?.success) {
           toast({
             title: data?.payload?.message,
           });
         }
       })
-      .catch((err) => console.log(err));
   }, [dispatch]);
 
   useEffect(() => {
     if (editProduct) {
-      console.log(editProduct);
       setTitle(editProduct?.title);
       setDescription(editProduct?.description);
       setBrand(editProduct?.brand);

@@ -33,10 +33,8 @@ const AdminOrders = () => {
   const [orderStatus, setOrderStatus] = useState(null);
   const { toast } = useToast();
 
-  console.log(allOrders);
 
   const handleOrderDets = (e) => {
-    console.log(e);
     setDialog(e);
   };
   const handleOrderStatus = (e) => {
@@ -44,8 +42,7 @@ const AdminOrders = () => {
   };
 
   const hanldeUpdateOrderStatus = () => {
-    console.log(orderStatus);
-    console.log(dialog);
+
     dispatch(updateOrderStatus({ orderStatus, id: dialog._id }))
       .then((data) => {
         if (data.payload.data.success) {
@@ -55,12 +52,10 @@ const AdminOrders = () => {
           useEffect(() => {}, [data.payload.data.success]);
         }
       })
-      .catch((err) => console.log(err));
   };
   useEffect(() => {
     dispatch(allOrdersForAdmin())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+    
   }, []);
   return (
     <div className="w-[100%] h-[100%]">

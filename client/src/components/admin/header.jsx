@@ -19,14 +19,7 @@ const AdminHeader = ({ setOpen }) => {
     toast({
       title: "Logged out successfully",
     });
-    // dispatch(authLogOut()).then((data)=>{
-    //   if(data){
-    //     console.log(data)
-    //     toast({
-    //       title:data.payload.data?.message
-    //     })
-    //   }
-    // }).catch((err)=>console.log(err))
+  
   };
   return (
     <div className="flex justify-between px-4 py-2">

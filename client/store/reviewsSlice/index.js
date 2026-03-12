@@ -4,7 +4,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const addReviews = createAsyncThunk(
   "/reviews/add",
   async ({ productId, review, ratings }) => {
-    console.log( productId, review, ratings);
     const { data } = await axiosInstance.post(
       `/api/reviews/add-review`,
 
@@ -44,12 +43,10 @@ const reviewsSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(addReviews.fulfilled, (state, action) => {
-      console.log(action);
       state.isLoading = false;
       state.reviews = null;
     });
     builder.addCase(addReviews.rejected, (state, action) => {
-      console.log(action);
       state.isLoading = false;
       state.reviews = null;
     });
@@ -57,12 +54,10 @@ const reviewsSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(productReview.fulfilled, (state, action) => {
-      console.log(action);
       state.isLoading = false;
       state.reviews = action?.payload?.success ? action.payload?.review : [];
     });
     builder.addCase(productReview.rejected, (state, action) => {
-      console.log(action);
       state.isLoading = false;
       state.reviews = null;
     });

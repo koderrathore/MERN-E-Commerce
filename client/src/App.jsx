@@ -26,10 +26,10 @@ import { Oval, TailSpin } from "react-loader-spinner";
 import axiosInstance from "./axios";
 
 const App = () => {
-  const { userId, getToken, isLoaded } = useAuth();
+  const { sessionClaims, userId, getToken, isLoaded } = useAuth();
   const { user } = useUser();
-  const role = user?.publicMetadata?.role || "user";
   const { isLoading } = useSelector((state) => state.shopProducts);
+  const role = user?.publicMetadata?.role || "user";
 
   const [token, setToken] = useState(null);
 
@@ -39,11 +39,10 @@ const App = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (role === "admin") {
-      dispatch(allOrdersForAdmin(token));
-    }
     dispatch(fetchShoppingProducts());
 
+    dispatch(allOrdersForAdmin(token))
+  
     if (!token) {
       creatToken();
     }
@@ -67,7 +66,8 @@ const App = () => {
     };
   }, []);
 
-  if (!isLoaded || isLoading)
+  if (!isLoaded){
+
     return (
       <div className="h-screen w-screen flex flex-grow justify-center items-center">
         {" "}
@@ -80,9 +80,10 @@ const App = () => {
           secondaryColor="gray"
           strokeWidth={2}
           strokeWidthSecondary={2}
-        />
+          />
       </div>
     );
+  }
   return (
     <div className=" w-screen h-screen">
       <Routes>

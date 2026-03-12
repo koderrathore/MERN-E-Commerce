@@ -16,7 +16,6 @@ export const fetchShoppingProducts = createAsyncThunk(
 export const searchProduct = createAsyncThunk(
   "/admin/search",
   async (search) => {
-    console.log(search);
     const { data } = await axiosInstance.post(
       `/api/shop/search/${search}`,
 
@@ -48,7 +47,6 @@ const shoppingSlice = createSlice({
     });
     builder.addCase(fetchShoppingProducts.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action);
       state.productList = null;
     });
     builder.addCase(searchProduct.pending, (state) => {
@@ -56,7 +54,6 @@ const shoppingSlice = createSlice({
     });
     builder.addCase(searchProduct.fulfilled, (state, action) => {
       state.isLoading = false;
-      console.log(action);
       
       state.productList = action.payload.data?.success
         ? action.payload.data?.result
@@ -64,7 +61,6 @@ const shoppingSlice = createSlice({
     });
     builder.addCase(searchProduct.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action);
       state.productList = null;
     });
   },

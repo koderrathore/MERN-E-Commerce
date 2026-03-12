@@ -55,7 +55,6 @@ import { decreaseQuantity } from "/store/cartSlice";
 const ShoppingHeader = () => {
   const { userId, getToken } = useAuth();
   const { isSignedIn } = useUser();
-  console.log(isSignedIn);
   const userName = "kunal";
   const { cart, isLoading } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -65,31 +64,11 @@ const ShoppingHeader = () => {
   let timer;
 
   const handleCart = async () => {
-    console.log("object");
     if (!token) return;
     dispatch(cartProducts(userId))
-      .then((data) => console.log("carthead ", data))
-      .catch((err) => console.log(err));
+     
   };
 
-  // const handleQuantity = (e, action) => {
-  //   let quantity = 0;
-  //   action == "plus"
-  //     ? (quantity = e?.quantity + 1)
-  //     : (quantity = e?.quantity - 1);
-
-  //   dispatch(
-  //     updateQuantity({
-  //       productId: e?.products._id,
-  //       quantity: quantity,
-  //       userId,
-  //     }),
-  //   )
-  //     .then((data) => {
-  //       dispatch(cartProducts(userId));
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
 
   const handleQuantity = (e, action) => {
     let quantity = 0;
@@ -99,14 +78,11 @@ const ShoppingHeader = () => {
 
     if (action == "plus") {
       dispatch(increaseQuantity(e?._id));
-      // return console.log("quantity ", cart);
     } else {
       dispatch(decreaseQuantity(e?._id));
-      // return console.log("quantity ", cart);
     }
    clearTimeout(timer);
     timer = setTimeout(() => {
-      console.log("yo")
       dispatch(
         updateQuantity({
           productId: e?.products._id,
@@ -114,18 +90,13 @@ const ShoppingHeader = () => {
           userId,
         }),
       )
-        // .then((data) => {
-        //   dispatch(cartProducts(userId));
-        // })
-        // .catch((err) => console.log(err));
+
     }, 500);
   };
 
   const handleDeleteCartItem = (e) => {
-    console.log(e);
     dispatch(removeItem({ productId: e?.products?._id, userId }))
-      .then(() => dispatch(cartProducts(userId)))
-      .catch((err) => console.log(err));
+      .then(() => dispatch(cartProducts(userId)));
   };
 
   const totalAmount =
@@ -147,8 +118,6 @@ const ShoppingHeader = () => {
   useEffect(() => {
     createToken();
   }, [userId, totalAmount, cart]);
-
-  console.log("cart ", cart?.quantity);
 
   return (
     <div className="items-center px-3 lg:px-4 border-b-2 border-gray-200">

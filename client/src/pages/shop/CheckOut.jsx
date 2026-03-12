@@ -47,17 +47,14 @@ const CheckOut = () => {
   const [prodDets, setProdDets] = useState(null);
   const { userId, getToken, isSignedIn } = useAuth();
   const userName = "Kunal";
-  console.log("selectedAddress ", selectedAddress);
   const { addressList } = useSelector((state) => state.address);
   const { orders } = useSelector((state) => state.orders);
 
-  console.log("addressList ", addressList);
   const { toast } = useToast();
   const dispatch = useDispatch();
   const { cart, isLoading } = useSelector((state) => state.cart);
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(cart);
   const CheckOutProduct = location.state?.CheckOutProduct;
   const totalAmount =
     CheckOutProduct && CheckOutProduct.length > 0
@@ -105,7 +102,6 @@ const CheckOut = () => {
             dispatch(fetchAddress(userId));
           }
         })
-        .catch((err) => console.log(err));
     }
     if (isEdit && addressId) {
       const formData = {
@@ -129,7 +125,6 @@ const CheckOut = () => {
           dispatch(fetchAddress(userId));
           setIsEdit(false);
         })
-        .catch((err) => console.log(err));
     }
   };
 
@@ -140,7 +135,6 @@ const CheckOut = () => {
 
   const handleEdit = (e) => {
     if (addressList?.length >= 4) return;
-    console.log("add", e);
     setAddressId(e._id);
     setAddress(e.address);
     setCity(e.city);
@@ -150,27 +144,18 @@ const CheckOut = () => {
   };
 
   const handleDeleteCartItem = (e) => {
-    console.log(e);
     dispatch(removeItem({ productId: e.products._id, userId }))
       .then((data) => dispatch(cartProducts(userId)))
-      .catch((err) => console.log(err));
   };
 
   const handleChekOut = () => {
     if (!CheckOutProduct) return toast({ title: "Something went wrong" });
     if (!selectedAddress)
       return toast({ title: "Please select address first" });
-    console.log("User ID " + userId);
-    console.log("Address ID " + selectedAddressId);
-    console.log(selectedAddress);
-    console.log("Product ID " + productId);
-    console.log("Quantity " + quantity);
-    console.log("Total Amount " + totalAmount);
-    console.log(CheckOutProduct);
+
 
     dispatch(getKey())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+     
 
     dispatch(createOrder({ amount: totalAmount }))
       .then((data) => {
@@ -183,7 +168,6 @@ const CheckOut = () => {
             description: "Test Transaction",
             order_id: data.payload.data?.order?.id,
             handler: async function (response) {
-              console.log(response);
               setOrderId(response.razorpay_order_id);
               setPaymentId(response.razorpay_payment_id);
               const { data } = await axios.post(
@@ -206,7 +190,6 @@ const CheckOut = () => {
                 },
                 { withCredentials: true },
               );
-              console.log(data);
               if (data.success) {
                 toast({ title: "Ordered" });
                 data.newOrder.items.map((e) => {
@@ -229,7 +212,7 @@ const CheckOut = () => {
           rzp.open();
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => (err));
   };
 
   async function createToken(params) {
@@ -238,8 +221,7 @@ const CheckOut = () => {
 
   useEffect(() => {
     dispatch(fetchAddress(userId))
-      .then((data) => console.log("checkout ", data))
-      .catch((err) => console.log(err));
+   
     dispatch(cartProducts(userId));
     if (CheckOutProduct) {
       setProductId(CheckOutProduct?._id);
@@ -252,7 +234,6 @@ const CheckOut = () => {
   if (!isSignedIn) {
     return navigate("/shop/home");
   }
-  console.log("CheckOutProduct ", cart);
   return (
     <div className="h-screen w-[100%] flex flex-col">
       <Dialog open={prodDets} onOpenChange={setProdDets}>

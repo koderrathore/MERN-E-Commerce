@@ -38,7 +38,6 @@ const Dashborad = ({ token }) => {
     // if(!token) return
     if (allOrders) {
       allOrders.forEach((e) => {
-        console.log(e);
         if (e.orderStatus === "pending") {
           p++;
         }
@@ -72,7 +71,6 @@ const Dashborad = ({ token }) => {
   useEffect(() => {}, [allOrders]);
   orderDets && orderDets?.length > 0
     ? orderDets?.map((e) => {
-        console.log(e);
       })
     : null;
 

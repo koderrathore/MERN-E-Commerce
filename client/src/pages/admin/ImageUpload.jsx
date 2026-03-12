@@ -61,7 +61,6 @@ const ImageUpload = ({
 
       data
     );
-    console.log(response);
     if (response.data?.success) {
       setLoader(false);
       setUploadedImageFile(response.data.result?.url);

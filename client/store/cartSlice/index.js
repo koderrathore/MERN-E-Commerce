@@ -2,18 +2,6 @@ import axiosInstance from "@/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { act } from "react";
 
-// export const addToCart = createAsyncThunk(
-//   "/cart/add",
-//   async ({ productId, userId }) => {
-//     console.log(userId)
-//     const { data } = await axiosInstance.post(
-//       `api/cart/add-to-cart/${userId}/${productId}`,
-//       { withCredentials: true }
-//     );
-//     return { data };
-//   }
-// );
-
 export const addToCart = createAsyncThunk(
   "/cart/add",
   async ({ productId, userId }) => {
@@ -80,13 +68,11 @@ const cartSLice = createSlice({
       if (item) {
         item.quantity += 1;
       }
-      console.log(item);
     },
     decreaseQuantity: (state, action) => {
       const item = state.cart.find(
         (item) => item._id?.toString() === action.payload?.toString(),
       );
-      console.log(item);
       if (item) {
         item.quantity -= 1;
       }
@@ -97,14 +83,14 @@ const cartSLice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(addToCart.fulfilled, (state, action) => {
-      ((state.isLoading = true), console.log(action));
+      state.isLoading = true;
       state.cart = action?.payload?.data?.success
         ? action?.payload?.data?.createCart ||
           action?.payload?.data?.alreadyHaveCart
         : null;
     });
     builder.addCase(addToCart.rejected, (state, action) => {
-      ((state.isLoading = false), console.log(action));
+      state.isLoading = false;
       state.cart = null;
     });
     builder.addCase(cartProducts.pending, (state) => {
@@ -112,13 +98,12 @@ const cartSLice = createSlice({
     });
     builder.addCase(cartProducts.fulfilled, (state, action) => {
       ((state.isLoading = false),
-        console.log("Cart " + action?.payload?.data?.cartProducts?.[0]?.items));
-      state.cart = action?.payload?.data?.success
-        ? action?.payload?.data?.cartProducts?.[0]?.items
-        : null;
+        (state.cart = action?.payload?.data?.success
+          ? action?.payload?.data?.cartProducts?.[0]?.items
+          : null));
     });
     builder.addCase(cartProducts.rejected, (state, action) => {
-      ((state.isLoading = false), console.log(action));
+      state.isLoading = false;
       state.cart = null;
     });
     builder.addCase(updateQuantity.pending, (state) => {
@@ -135,10 +120,9 @@ const cartSLice = createSlice({
     });
     builder.addCase(removeItem.fulfilled, (state, action) => {
       state.isLoading = false;
-      console.log(action);
     });
     builder.addCase(removeItem.rejected, (state, action) => {
-      ((state.isLoading = false), console.log(action));
+      state.isLoading = false;
       state.cart = null;
     });
   },

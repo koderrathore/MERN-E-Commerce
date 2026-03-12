@@ -60,26 +60,26 @@ const addressSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(addAddress.fulfilled, (state, action) => {
-      ((state.isLoading = false), console.log("adressSlice ", action));
+      ((state.isLoading = false));
       state.addressList = action?.payload?.data?.success
         ? action?.payload?.data?.newAddress
         : null;
     });
     builder.addCase(addAddress.rejected, (state, action) => {
-      ((state.isLoading = false), console.log(action));
+      ((state.isLoading = false));
       state.addressList = null;
     });
     builder.addCase(fetchAddress.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(fetchAddress.fulfilled, (state, action) => {
-      ((state.isLoading = false), console.log(action));
+      ((state.isLoading = false));
       state.addressList = action?.payload?.data?.success
         ? action?.payload?.data?.address
         : null;
     });
     builder.addCase(fetchAddress.rejected, (state, action) => {
-      ((state.isLoading = false), console.log(action));
+      ((state.isLoading = false));
       state.addressList = null;
     });
   },

@@ -55,7 +55,6 @@ export const allOrdersForAdmin = createAsyncThunk(
 export const updateOrderStatus = createAsyncThunk(
   "orders/order-status",
   async ({ orderStatus, id }) => {
-    console.log(orderStatus, id);
     const { data } = await axiosInstance.put(
       `/api/orders/update-order-status`,
 
@@ -76,23 +75,19 @@ const ordersSlice = createSlice({
     });
     builder.addCase(getKey.fulfilled, (state, action) => {
       state.isLoading = false;
-      console.log(action);
     });
     builder.addCase(getKey.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action);
     });
     builder.addCase(createOrder.pending, (state) => {
       state.isLoading = true;
       state.orders = null;
     });
     builder.addCase(createOrder.fulfilled, (state, action) => {
-      console.log(action);
       state.isLoading = false;
     });
     builder.addCase(createOrder.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action);
       state.orders = null;
     });
     builder.addCase(allOrders.pending, (state) => {
@@ -100,7 +95,6 @@ const ordersSlice = createSlice({
       state.orders = null;
     });
     builder.addCase(allOrders.fulfilled, (state, action) => {
-      console.log(action);
       state.isLoading = false;
       state.orders = action?.payload?.data?.success
         ? action?.payload?.data?.allOrders
@@ -108,7 +102,6 @@ const ordersSlice = createSlice({
     });
     builder.addCase(allOrders.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action);
     });
     builder.addCase(allOrdersForAdmin.pending, (state) => {
       state.isLoading = true;
@@ -122,13 +115,11 @@ const ordersSlice = createSlice({
     });
     builder.addCase(allOrdersForAdmin.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action);
     });
     builder.addCase(updateOrderStatus.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(updateOrderStatus.fulfilled, (state, action) => {
-      console.log(action);
       state.isLoading = false;
 
       const updatedOrder = action?.payload?.data?.updatedOrder;
@@ -139,7 +130,6 @@ const ordersSlice = createSlice({
     });
     builder.addCase(updateOrderStatus.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action);
     });
   },
 });

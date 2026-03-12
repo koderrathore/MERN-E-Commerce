@@ -23,7 +23,6 @@ const Details = ({
   isDetails,
   setIsDetails,
 }) => {
-  console.log(isDetails);
   return (
     <div>
       <Dialog open={isDetails} onOpenChange={setIsDetails}>

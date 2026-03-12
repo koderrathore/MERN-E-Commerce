@@ -28,6 +28,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@clerk/clerk-react";
 import { searchProduct } from "/store/shopSlice";
+import { Oval } from "react-loader-spinner";
 
 const Home = () => {
   const settings = {
@@ -42,16 +43,15 @@ const Home = () => {
   };
 
   const navigate = useNavigate();
-  const {userId} = useAuth();
+  const { userId } = useAuth();
   const dispatch = useDispatch();
   const { toast } = useToast();
-  const { productList } = useSelector((state) => state.shopProducts);
+  const { productList,isLoading } = useSelector((state) => state.shopProducts);
   const { allOrders } = useSelector((state) => state.orders);
   // const { userId } = useSelector((state) => state.auth);
   const user = useAuth();
   const { getToken } = useAuth();
-  console.log(useAuth());
-  console.log(productList);
+
   const [prodDets, setProdDets] = useState(null);
 
   const handleAddTOCart = async (prod) => {
@@ -66,11 +66,8 @@ const Home = () => {
           });
         }
       })
-      .catch((err) => console.log(err));
   };
-  useEffect(() => {
-    
-  }, [allOrders, productList]);
+  useEffect(() => {}, [allOrders, productList]);
   return (
     <div className="w-screen h-full overflow-x-hidden flex flex-col">
       <Dialog open={prodDets} onOpenChange={setProdDets}>

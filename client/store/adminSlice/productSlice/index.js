@@ -12,7 +12,6 @@ export const addProducts = createAsyncThunk(
         withCredentials: true,
       },
     );
-    console.log(response);
     return response.data;
   },
 );
@@ -21,7 +20,6 @@ export const fetchProducts = createAsyncThunk("/admin/get", async () => {
   const response = await axiosInstance.get(`/api/admin/fetchProducts`, {
     withCredentials: true,
   });
-  console.log(response)
   return response?.data;
 });
 
@@ -63,12 +61,10 @@ export const adminProductSlice = createSlice({
     });
     builder.addCase(addProducts.fulfilled, (state, action) => {
       state.isLoading = false;
-      console.log(action);
       state.productList = null;
     });
     builder.addCase(addProducts.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action);
       state.productList = null;
     });
     //fetchProducts
@@ -77,14 +73,12 @@ export const adminProductSlice = createSlice({
     });
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
       state.isLoading = false;
-      console.log(action);
       state.productList = action?.payload?.success
         ? action?.payload?.allProducts
         : null;
     });
     builder.addCase(fetchProducts.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action);
       state.productList = null;
     });
     //updateProducts
@@ -93,12 +87,10 @@ export const adminProductSlice = createSlice({
     });
     builder.addCase(updateProducts.fulfilled, (state, action) => {
       state.isLoading = false;
-      console.log(action);
       state.productList = null;
     });
     builder.addCase(updateProducts.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action);
       state.productList = null;
     });
     //deleteProducts
@@ -107,12 +99,10 @@ export const adminProductSlice = createSlice({
     });
     builder.addCase(deleteProducts.fulfilled, (state, action) => {
       state.isLoading = false;
-      console.log(action);
       state.productList = null;
     });
     builder.addCase(deleteProducts.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action);
       state.productList = null;
     });
   },

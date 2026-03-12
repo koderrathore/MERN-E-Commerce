@@ -38,7 +38,6 @@ const Account = () => {
   const navigate = useNavigate();
   const { addressList, isLoading } = useSelector((state) => state.address);
   const { orders } = useSelector((state) => state.orders);
-  console.log("orders ", orders);
   const { toast } = useToast();
   const dispatch = useDispatch();
 
@@ -52,7 +51,6 @@ const Account = () => {
       phone,
     };
     if (userId && !isEdit) {
-      console.log("11111");
       dispatch(addAddress(formData ))
         .then((data) => {
           if (data.payload?.data?.success) {
@@ -79,8 +77,7 @@ const Account = () => {
           toast({
             title: "Something went wrong!!!",
           });
-          console.log(err);
-          console.log("2222");
+        
 
           return <div>Something went wrong</div>;
         });
@@ -95,7 +92,6 @@ const Account = () => {
       };
       dispatch(editAddress(formData))
         .then((data) => {
-          console.log(data);
           if (data.payload.data.success) {
             toast({
               title: "Address Updated",
@@ -109,14 +105,12 @@ const Account = () => {
           setIsEdit(false);
         })
         .catch((err) => {
-          console.log(err);
           return <div>Something went wrong</div>;
         });
     }
   };
 
   const handleRemove = (e) => {
-    console.log("object");
     dispatch(deleteAddress({ addressId: e._id }))
       .then((data) => {
         if (data?.payload?.data?.success) {
@@ -127,7 +121,6 @@ const Account = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
         return <div>Something went wrong</div>;
       });
   };
@@ -157,15 +150,9 @@ const Account = () => {
       if (!token) return;
 
       dispatch(fetchAddress(userId ))
-        .then((data) => console.log(data))
-        .catch((err) => {
-          console.log(err);
-          return <div>Something went wrong</div>;
-        });
+    
       dispatch(allOrders(userId))
-        .then((data) => console.log("allorders ", data))
         .catch((err) => {
-          console.log(err);
           return <div>Something went wrong</div>;
         });
     }

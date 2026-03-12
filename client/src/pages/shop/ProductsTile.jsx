@@ -20,7 +20,6 @@ const ShoppingProductTile = ({
   const location = useLocation();
   const { userId } = useAuth();
   const handleAddTOCart = (prod) => {
-    console.log(prod);
     if (!userId) {
       return navigate("/auth/login");
     }
@@ -32,14 +31,11 @@ const ShoppingProductTile = ({
           });
         }
       })
-      .catch((err) => console.log(err));
   };
   function handleProductDetails(e) {
-    console.log(e);
     setProdDets(e);
     dispatch(productReview({ productId: e?._id }))
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+   
   }
   return (
     <div className="flex flex-col px-1 py-1 border-dotted border-muted-foreground  transition-all ease-in w-32 lg:w-fit my-2 mx-1 border-2 hover:border-dashed hover:border-black lg:p-3 rounded-md lg:mx-1 lg:my-4">

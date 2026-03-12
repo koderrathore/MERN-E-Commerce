@@ -54,7 +54,6 @@ import { isAllOf } from "@reduxjs/toolkit";
 
 const MobileNav = ({ handleCart, handleQuantity, handleDeleteCartItem }) => {
   const { isSignedIn } = useUser();
-  console.log(isSignedIn);
   const userName = "kunal";
   const { cart, isLoading } = useSelector((state) => state.cart);
 
@@ -102,8 +101,6 @@ const MobileNav = ({ handleCart, handleQuantity, handleDeleteCartItem }) => {
               onClick={() => {
                 setOpenDialog(true);
                 handleCart()
-                  .then((data) => console.log("mob cart ", data))
-                  .catch((err) => console.log(err));
               }}
               className="lg:hidden flex justify-center items-center"
               variant="outline"

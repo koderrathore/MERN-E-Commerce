@@ -44,7 +44,6 @@ import { SignedIn, SignedOut, useAuth, useUser } from "@clerk/clerk-react";
 
 const LapNav = ({ handleCart, handleQuantity, handleDeleteCartItem }) => {
   const { isSignedIn } = useUser();
-  console.log(isSignedIn);
   const userName = "kunal";
   const { cart, isLoading } = useSelector((state) => state.cart);
 

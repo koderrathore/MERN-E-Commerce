@@ -54,8 +54,7 @@ import { useAuth } from "@clerk/clerk-react";
 import { searchProduct } from "/store/shopSlice";
 
 const Listing = ({ tick }) => {
-  const list = useSelector((state) => state.shopProducts);
-  console.log(list.productList);
+  const list = useSelector((state) => state.shopProducts);  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [sorted, setSorted] = useState(null);
@@ -80,28 +79,22 @@ const Listing = ({ tick }) => {
   const { orders } = useSelector((state) => state.orders);
 
   const { userId } = useAuth();
-  console.log(userId);
 
   const { reviews, isLoading } = useSelector((state) => state.reviews);
-  console.log(orders);
-  console.log(reviews);
+
 
   const handleAddTOCart = (prod) => {
-    console.log(prod);
     if (!userId) {
-      console.log("object");
       return navigate("/auth/login");
     }
     dispatch(addToCart({ productId: prod._id, userId }))
       .then((data) => {
-        console.log(data);
         if (data.payload.data.success) {
           toast({
             title: data.payload.data.message,
           });
         }
       })
-      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -119,17 +112,14 @@ const Listing = ({ tick }) => {
   }, [location.state]);
 
   const handleSort = (value) => {
-    console.log(value);
     setSorted(value);
   };
 
    const handleSerach = (e) => {
       e.preventDefault();
-      console.log(search);
       dispatch(searchProduct(search))
         .then((data) => {
           if (data.payload.success) {
-            console.log(data);
             toast({
               title: data.payload.data?.message,
             });
@@ -147,7 +137,6 @@ const Listing = ({ tick }) => {
     };
 
   const handleCategoryCheck = (value, checked) => {
-    console.log(value, checked);
     const currentBrand = searchParams.getAll("brand");
     const currentCategory = searchParams.getAll("category");
     if (checked) {
@@ -172,7 +161,6 @@ const Listing = ({ tick }) => {
   };
 
   const handleBrandCheck = (value, checked) => {
-    console.log(value, checked);
     const currentBrand = searchParams.getAll("brand");
     const currentCategory = searchParams.getAll("category");
 
@@ -197,7 +185,7 @@ const Listing = ({ tick }) => {
     }
   };
   const handleStars = (e) => {
-    console.log(e);
+    
     setRatings(e);
   };
 
@@ -210,7 +198,6 @@ const Listing = ({ tick }) => {
   useEffect(() => {
     dispatch(fetchShoppingProducts()).then((data) => {
       setProductList(data?.payload.data?.allProducts);
-      console.log(data);
     });
   }, [dispatch]);
 
@@ -221,8 +208,7 @@ const Listing = ({ tick }) => {
   }, []);
 
   const handleReviews = () => {
-    console.log(review);
-    console.log(prodDets?._id, review, ratings);
+    
     dispatch(addReviews({ productId: prodDets._id, review, ratings }))
       .then((data) => {
         if (data?.payload?.data?.success) {
@@ -232,7 +218,6 @@ const Listing = ({ tick }) => {
           dispatch(productReview({ productId: prodDets?._id }));
         }
       })
-      .catch((err) => console.log(err));
   };
 
   return (
@@ -346,16 +331,7 @@ const Listing = ({ tick }) => {
                               value={review}
                               onChange={(e) => setReview(e.target.value)}
                             />
-                            {/* <Input
-                              disable={review?.trim()===""}
-                              value={review}
-                              onValueChannge={(e)=>{
-                                console.log(e)
-                                setReview(e.target.value)
-                              }}
-                                className=""
-                                placeholder="Write review here"
-                              ></Input> */}
+                         
                             <Button
                               onClick={() => {
                                 handleReviews();
