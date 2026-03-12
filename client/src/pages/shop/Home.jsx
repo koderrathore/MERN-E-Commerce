@@ -67,6 +67,7 @@ const Home = () => {
         }
       })
   };
+
   useEffect(() => {}, [allOrders, productList]);
   return (
     <div className="w-screen h-full overflow-x-hidden flex flex-col">
@@ -287,7 +288,7 @@ const Home = () => {
           <i className="font-serif">Feature</i> Products
         </h1>{" "}
         <div className="w-full h-full flex flex-wrap mt-2 sm:hidden justify-center">
-          {productList && productList.length > 0
+          {productList && productList.length > 0 || isLoading
             ? productList.slice(0, 4).map((e, i) => (
                 <div key={i} className="flex-row h-fit lg:pl-6">
                   <ShoppingProductTile
@@ -300,7 +301,7 @@ const Home = () => {
             : null}
         </div>
         <div className="w-full h-full flex-wrap mt-2 hidden sm:flex justify-around pr-4">
-          {productList && productList.length > 0
+          {productList && productList.length > 0 || isLoading
             ? productList.slice(0, 5).map((e, i) => (
                 <div key={i} className="flex-row h-fit lg:pl-6">
                   <ShoppingProductTile
@@ -310,7 +311,9 @@ const Home = () => {
                   />
                 </div>
               ))
-            : null}
+            : isLoading?
+            <div>Please Wait till Products Load</div>
+            :null}
         </div>
       </div>
     </div>

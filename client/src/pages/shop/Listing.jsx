@@ -706,7 +706,8 @@ const Listing = ({ tick }) => {
       </div>
       <div className=" w-full h-auto flex flex-wrap justify-center lg:justify-start lg:hidden">
         {productList && productList?.length > 0
-          ? productList
+
+          ? productList || !isLoading
               // .filter(
               //   (brand) =>
               //     !brandFilter?.length > 0 || brandFilter.includes(brand.brand)
@@ -750,7 +751,9 @@ const Listing = ({ tick }) => {
                   />
                 </div>
               ))
-          : null}
+          : isLoading?
+            <div>Please Wait till Products Load</div>
+            :null}
       </div>
     </div>
   );
