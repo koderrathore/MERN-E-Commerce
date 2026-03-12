@@ -162,88 +162,75 @@ const LapNav = ({ handleCart, handleQuantity, handleDeleteCartItem }) => {
                   cart.map((e, i) => {
                     return (
                       <div className="flex justify-between py-1 -ml-5 my-1 relative border-b-2 border-gray-300 pb-2">
-                        {isLoading ? (
-                          <div className="flex w-fit items-center gap-4 my-6">
-                            <Skeleton className="w-28 h-24 shrink-0 rounded-full" />
-                            <div className="grid gap-4">
-                              <Skeleton className="h-12 w-[180px]" />
-                              <Skeleton className="h-12 w-[140px]" />
-                            </div>
+                        <div className="flex flex-col gap-1">
+                          <div className="w-28 h-32">
+                            <img
+                              className="w-full h-full object-cover"
+                              src={e.products?.image}
+                              alt=""
+                            />
                           </div>
-                        ) : (
-                          <>
-                            <div className="flex flex-col gap-1">
-                              <div className="w-28 h-32">
-                                <img
-                                  className="w-full h-full object-cover"
-                                  src={e.products?.image}
-                                  alt=""
-                                />
-                              </div>
-                              <div className="flex items-center gap-2 justify-center">
-                                <Button
-                                  disabled={e.quantity === 1 || isLoading}
-                                  onClick={() => {
-                                    handleQuantity(e, "minus");
-                                  }}
-                                  className="h-6 w-2"
-                                >
-                                  <Minus />
-                                </Button>
-                                <span className="text-lg font-bold">
-                                  {e?.quantity}
-                                </span>
-                                <Button
-                                  disabled={
-                                    isLoading ||
-                                    e.products?.totalStock <= e?.quantity
-                                  }
-                                  onClick={() => {
-                                    handleQuantity(e, "plus");
-                                  }}
-                                  className="h-6 w-2"
-                                >
-                                  <Plus />
-                                </Button>
-                              </div>
-                            </div>
-                            <div className="flex flex-col justify-between pt-4 ml-10 mt-4 text-xl">
-                              <div className="flex flex-col gap-0 text-xl justify-start items-start">
-                                <h1 className=" leading-6 w-full font-semibold">
-                                  {e?.products?.title}
-                                </h1>
-                                <span className="text-black font-semibold ">
-                                  {e?.products?.salePrice > 0
-                                    ? e?.products?.salePrice * e?.quantity
-                                    : e?.products?.price * e?.quantity}
-                                  Rs.
-                                </span>
-                              </div>
-                              <div className="flex flex-col gap-1">
-                                <Button
-                                  disabled={isLoading || !cart?.length > 0}
-                                  onClick={() => {
-                                    setOpenCart(false);
-                                    navigate("/shop/checkOut", {
-                                      state: { CheckOutProduct: [e] },
-                                    });
-                                  }}
-                                  className=" text-xl"
-                                >
-                                  check out
-                                </Button>
-                              </div>
-                              <div
-                                onClick={() => {
-                                  handleDeleteCartItem(e);
-                                }}
-                                className="absolute top-0 right-0"
-                              >
-                                <X />
-                              </div>
-                            </div>
-                          </>
-                        )}
+                          <div className="flex items-center gap-2 justify-center">
+                            <Button
+                              disabled={e.quantity === 1}
+                              onClick={() => {
+                                handleQuantity(e, "minus");
+                              }}
+                              className="h-6 w-2"
+                            >
+                              <Minus />
+                            </Button>
+                            <span className="text-lg font-bold">
+                              {e?.quantity}
+                            </span>
+                            <Button
+                              disabled={
+                                e.products?.totalStock <= e?.quantity
+                              }
+                              onClick={() => {
+                                handleQuantity(e, "plus");
+                              }}
+                              className="h-6 w-2"
+                            >
+                              <Plus />
+                            </Button>
+                          </div>
+                        </div>
+                        <div className="flex flex-col justify-between pt-4 ml-10 mt-4 text-xl  w-full">
+                          <div className="flex flex-col gap-0 text-xl justify-start items-start">
+                            <h1 className=" leading-6 w-full font-semibold line-clamp-2">
+                              {e?.products?.title}
+                            </h1>
+                            <span className="text-black font-semibold ">
+                              {e?.products?.salePrice > 0
+                                ? e?.products?.salePrice * e?.quantity
+                                : e?.products?.price * e?.quantity}
+                              Rs.
+                            </span>
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <Button
+                              disabled={isLoading || !cart?.length > 0}
+                              onClick={() => {
+                                setOpenCart(false);
+                                navigate("/shop/checkOut", {
+                                  state: { CheckOutProduct: [e] },
+                                });
+                              }}
+                              className=" text-xl"
+                            >
+                              check out
+                            </Button>
+                          </div>
+                          <div
+                            onClick={() => {
+                              handleDeleteCartItem(e);
+                            }}
+                            className="absolute top-0 right-0"
+                          >
+                            <X />
+                          </div>
+                        </div>
                       </div>
                     );
                   })
@@ -255,7 +242,7 @@ const LapNav = ({ handleCart, handleQuantity, handleDeleteCartItem }) => {
                     <div className="flex justify-between px-4 items-center">
                       <h1 className="text-4xl font-semibold">Total</h1>
                       <span className="text-3xl font-semibold">
-                        {totalAmount}
+                        {totalAmount} Rs.
                       </span>
                     </div>
                     <Button
@@ -266,7 +253,7 @@ const LapNav = ({ handleCart, handleQuantity, handleDeleteCartItem }) => {
                           state: { CheckOutProduct: cart },
                         });
                       }}
-                      className=" text-xl w-fit"
+                      className=" text-xl"
                     >
                       check out
                     </Button>
@@ -280,31 +267,8 @@ const LapNav = ({ handleCart, handleQuantity, handleDeleteCartItem }) => {
             <div className="flex gap-1 items-center">
               <CircleUserRound onClick={() => navigate("/shop/account")} />
             </div>
-            {/* 
-            <DropdownMenu className="flex items-center">
-              <DropdownMenuTrigger asChild>
-                <div className="cursor-pointer text-2xl font-serif text-gray-400 w-12 h-12 bg-black rounded-full hover:text-white flex justify-center items-center font-semibold">
-                  {userName?.[0].toUpperCase()}
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuSeparator />
-
-              <DropdownMenuContent side="right">
-                <DropdownMenuLabel>Logged in as {userName}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <Link to={"/shop/account"}>
-                  <DropdownMenuItem>
-                    <User />
-                    Account
-                  </DropdownMenuItem>
-                </Link>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <UserButton />
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-              </DropdownMenuContent>
-            </DropdownMenu> */}
+          
+         
           </div>
         </div>
       </SignedIn>

@@ -42,6 +42,7 @@ const Home = () => {
   };
 
   const navigate = useNavigate();
+  const {userId} = useAuth();
   const dispatch = useDispatch();
   const { toast } = useToast();
   const { productList } = useSelector((state) => state.shopProducts);
@@ -54,6 +55,9 @@ const Home = () => {
   const [prodDets, setProdDets] = useState(null);
 
   const handleAddTOCart = async (prod) => {
+    if (!userId) {
+      return navigate("/auth/login");
+    }
     dispatch(addToCart({ productId: prod._id, userId: user?.userId }))
       .then((data) => {
         if (data?.payload?.data?.success) {

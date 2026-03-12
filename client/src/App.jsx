@@ -26,11 +26,10 @@ import { Oval, TailSpin } from "react-loader-spinner";
 import axiosInstance from "./axios";
 
 const App = () => {
-  const { sessionClaims, userId, getToken, isLoaded } = useAuth();
+  const { userId, getToken, isLoaded } = useAuth();
   const { user } = useUser();
-
   const role = user?.publicMetadata?.role || "user";
-  // console.log("user2 ", sessionClaims?.meta?.role)
+  const { isLoading } = useSelector((state) => state.shopProducts);
 
   const [token, setToken] = useState(null);
 
@@ -40,22 +39,11 @@ const App = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    if (role === "admin") {
+      dispatch(allOrdersForAdmin(token));
+    }
     dispatch(fetchShoppingProducts());
 
-    // if (userId && token) {
-    //   dispatch(fetchAddress({ userId, token }))
-    //     .then((data) => console.log(data))
-    //     .catch((err) => console.log(err));
-    // dispatch(cartProducts({ userId, token }))
-    //   .then((data) => console.log(data))
-    //   .catch((err) => console.log(err));
-
-    //   dispatch(allOrders({ userId, token }));
-
-    dispatch(allOrdersForAdmin(token))
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
-    // }
     if (!token) {
       creatToken();
     }
@@ -79,7 +67,7 @@ const App = () => {
     };
   }, []);
 
-  if (!isLoaded)
+  if (!isLoaded || isLoading)
     return (
       <div className="h-screen w-screen flex flex-grow justify-center items-center">
         {" "}

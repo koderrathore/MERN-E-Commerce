@@ -29,18 +29,12 @@ export const addToCart = createAsyncThunk(
   },
 );
 
-export const cartProducts = createAsyncThunk(
-  "/cart/get",
-  async (userId ) => {
-    const { data } = await axiosInstance.get(
-      `api/cart/cart-products/${userId}`,
-      {
-        withCredentials: true,
-      },
-    );
-    return { data };
-  },
-);
+export const cartProducts = createAsyncThunk("/cart/get", async (userId) => {
+  const { data } = await axiosInstance.get(`api/cart/cart-products/${userId}`, {
+    withCredentials: true,
+  });
+  return { data };
+});
 
 export const updateQuantity = createAsyncThunk(
   "/cart/put",
@@ -78,7 +72,26 @@ const initialState = {
 const cartSLice = createSlice({
   name: "cart",
   initialState,
-  reducers: {},
+  reducers: {
+    increaseQuantity: (state, action) => {
+      const item = state.cart.find(
+        (item) => item._id?.toString() === action.payload?.toString(),
+      );
+      if (item) {
+        item.quantity += 1;
+      }
+      console.log(item);
+    },
+    decreaseQuantity: (state, action) => {
+      const item = state.cart.find(
+        (item) => item._id?.toString() === action.payload?.toString(),
+      );
+      console.log(item);
+      if (item) {
+        item.quantity -= 1;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(addToCart.pending, (state) => {
       state.isLoading = false;
@@ -131,4 +144,5 @@ const cartSLice = createSlice({
   },
 });
 
+export const { increaseQuantity, decreaseQuantity } = cartSLice.actions;
 export default cartSLice.reducer;

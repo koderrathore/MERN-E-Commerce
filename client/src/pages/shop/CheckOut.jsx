@@ -555,8 +555,8 @@ const CheckOut = () => {
                   )}
                   {(CheckOutProduct && CheckOutProduct.length > 0) ||
                   (cart && cart?.lenght > 0) ? (
-                    <div className="rounded-lg border-t-2 border-gray-300 right-0 flex flex-col  bg-white py-1 gap-2">
-                      <div className="flex justify-between px-4 items-center">
+                    <div className="rounded-lg border-gray-300 right-0 flex flex-col items-end p-2 py-1 gap-2 ">
+                      <div className="flex px-4 items-center gap-1">
                         <h1 className="text-2xl font-semibold">Total</h1>
                         <span className="text-2xl font-semibold">
                           {totalAmount}Rs.
@@ -566,7 +566,7 @@ const CheckOut = () => {
                         <Button
                           onClick={() => handleChekOut()}
                           disabled={isLoading}
-                          className=" sm:text-xl w-fit ml-2 sm:ml-0"
+                          className=" sm:text-xl ml-2 sm:ml-0 w-40"
                         >
                           check out
                         </Button>

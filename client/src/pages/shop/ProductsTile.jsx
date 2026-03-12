@@ -22,7 +22,6 @@ const ShoppingProductTile = ({
   const handleAddTOCart = (prod) => {
     console.log(prod);
     if (!userId) {
-      console.log("object");
       return navigate("/auth/login");
     }
     dispatch(addToCart({ productId: prod._id, userId }))
