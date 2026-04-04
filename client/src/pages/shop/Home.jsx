@@ -46,7 +46,7 @@ const Home = () => {
   const { userId } = useAuth();
   const dispatch = useDispatch();
   const { toast } = useToast();
-  const { productList,isLoading } = useSelector((state) => state.shopProducts);
+  const { productList,productListLoading } = useSelector((state) => state.shopProducts);
   const { allOrders } = useSelector((state) => state.orders);
   // const { userId } = useSelector((state) => state.auth);
   const user = useAuth();
@@ -69,6 +69,27 @@ const Home = () => {
   };
 
   useEffect(() => {}, [allOrders, productList]);
+
+  
+  if (productListLoading ){
+
+    return (
+      <div className="h-screen w-screen flex flex-grow justify-center items-center">
+        {" "}
+        <Oval
+          height={80}
+          width={80}
+          color="black"
+          visible={productListLoading}
+          ariaLabel="oval-loading"
+          secondaryColor="gray"
+          strokeWidth={2}
+          strokeWidthSecondary={2}
+          />
+      </div>
+    );
+  }
+
   return (
     <div className="w-screen h-full overflow-x-hidden flex flex-col">
       <Dialog open={prodDets} onOpenChange={setProdDets}>
@@ -288,7 +309,7 @@ const Home = () => {
           <i className="font-serif">Feature</i> Products
         </h1>{" "}
         <div className="w-full h-full flex flex-wrap mt-2 sm:hidden justify-center">
-          {productList && productList.length > 0 || isLoading
+          {productList && productList.length > 0 || productListLoading
             ? productList.slice(0, 4).map((e, i) => (
                 <div key={i} className="flex-row h-fit lg:pl-6">
                   <ShoppingProductTile
@@ -301,7 +322,7 @@ const Home = () => {
             : null}
         </div>
         <div className="w-full h-full flex-wrap mt-2 hidden sm:flex justify-around pr-4">
-          {productList && productList.length > 0 || isLoading
+          {productList && productList.length > 0 || productListLoading
             ? productList.slice(0, 5).map((e, i) => (
                 <div key={i} className="flex-row h-fit lg:pl-6">
                   <ShoppingProductTile
@@ -311,7 +332,7 @@ const Home = () => {
                   />
                 </div>
               ))
-            : isLoading?
+            : productListLoading?
             <div>Please Wait till Products Load</div>
             :null}
         </div>

@@ -28,7 +28,7 @@ import axiosInstance from "./axios";
 const App = () => {
   const { sessionClaims, userId, getToken, isLoaded } = useAuth();
   const { user } = useUser();
-  const { isLoading } = useSelector((state) => state.shopProducts);
+  const { productListLoading } = useSelector((state) => state.shopProducts);
   const role = user?.publicMetadata?.role || "user";
 
   const [token, setToken] = useState(null);
@@ -66,24 +66,6 @@ const App = () => {
     };
   }, []);
 
-  if (!isLoaded){
-
-    return (
-      <div className="h-screen w-screen flex flex-grow justify-center items-center">
-        {" "}
-        <Oval
-          height={80}
-          width={80}
-          color="black"
-          visible={!isLoaded}
-          ariaLabel="oval-loading"
-          secondaryColor="gray"
-          strokeWidth={2}
-          strokeWidthSecondary={2}
-          />
-      </div>
-    );
-  }
   return (
     <div className=" w-screen h-screen">
       <Routes>

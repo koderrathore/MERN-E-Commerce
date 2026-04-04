@@ -26,7 +26,7 @@ export const searchProduct = createAsyncThunk(
 );
 
 const initialState = {
-  isLoading: false,
+  productListLoading: false,
   productList: [],
 };
 
@@ -37,30 +37,30 @@ const shoppingSlice = createSlice({
   extraReducers: (builder) => {
     //fetchProducts
     builder.addCase(fetchShoppingProducts.pending, (state) => {
-      state.isLoading = true;
+      state.productListLoading = true;
     });
     builder.addCase(fetchShoppingProducts.fulfilled, (state, action) => {
-      state.isLoading = false;
+      state.productListLoading = false;
       state.productList = action.payload.data?.success
         ? action.payload.data?.allProducts
         : null;
     });
     builder.addCase(fetchShoppingProducts.rejected, (state, action) => {
-      state.isLoading = false;
+      state.productListLoading = false;
       state.productList = null;
     });
     builder.addCase(searchProduct.pending, (state) => {
-      state.isLoading = true;
+      state.productListLoading = true;
     });
     builder.addCase(searchProduct.fulfilled, (state, action) => {
-      state.isLoading = false;
+      state.productListLoading = false;
       
       state.productList = action.payload.data?.success
         ? action.payload.data?.result
         : null;
     });
     builder.addCase(searchProduct.rejected, (state, action) => {
-      state.isLoading = false;
+      state.productListLoading = false;
       state.productList = null;
     });
   },

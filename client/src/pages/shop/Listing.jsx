@@ -52,13 +52,14 @@ import { productReview } from "/store/reviewsSlice";
 import axios from "axios";
 import { useAuth } from "@clerk/clerk-react";
 import { searchProduct } from "/store/shopSlice";
+import { Oval } from "react-loader-spinner";
 
 const Listing = ({ tick }) => {
-  const list = useSelector((state) => state.shopProducts);  
+  const {productList,productListLoading} = useSelector((state) => state.shopProducts);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [sorted, setSorted] = useState(null);
-  const [productList, setProductList] = useState(null);
+  // const [productList, setProductList] = useState(null);
   const [categoryFilter, setCategoryFilter] = useState([]);
   const [brandFilter, setBrandFilter] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -66,8 +67,8 @@ const Listing = ({ tick }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [productsLength, setProductsLength] = useState(null);
   const [ratings, setRatings] = useState(1);
-    const [search, setSearch] = useState("");
-  
+  const [search, setSearch] = useState("");
+
   // let productsLength = null
 
   const location = useLocation();
@@ -82,19 +83,17 @@ const Listing = ({ tick }) => {
 
   const { reviews, isLoading } = useSelector((state) => state.reviews);
 
-
   const handleAddTOCart = (prod) => {
     if (!userId) {
       return navigate("/auth/login");
     }
-    dispatch(addToCart({ productId: prod._id, userId }))
-      .then((data) => {
-        if (data.payload.data.success) {
-          toast({
-            title: data.payload.data.message,
-          });
-        }
-      })
+    dispatch(addToCart({ productId: prod._id, userId })).then((data) => {
+      if (data.payload.data.success) {
+        toast({
+          title: data.payload.data.message,
+        });
+      }
+    });
   };
 
   useEffect(() => {
@@ -115,26 +114,26 @@ const Listing = ({ tick }) => {
     setSorted(value);
   };
 
-   const handleSerach = (e) => {
-      e.preventDefault();
-      dispatch(searchProduct(search))
-        .then((data) => {
-          if (data.payload.success) {
-            toast({
-              title: data.payload.data?.message,
-            });
-          } else {
-            toast({
-              title: data.payload.data?.message,
-            });
-          }
-        })
-        .catch((err) => {
+  const handleSerach = (e) => {
+    e.preventDefault();
+    dispatch(searchProduct(search))
+      .then((data) => {
+        if (data.payload.success) {
           toast({
             title: data.payload.data?.message,
           });
+        } else {
+          toast({
+            title: data.payload.data?.message,
+          });
+        }
+      })
+      .catch((err) => {
+        toast({
+          title: data.payload.data?.message,
         });
-    };
+      });
+  };
 
   const handleCategoryCheck = (value, checked) => {
     const currentBrand = searchParams.getAll("brand");
@@ -185,15 +184,14 @@ const Listing = ({ tick }) => {
     }
   };
   const handleStars = (e) => {
-    
     setRatings(e);
   };
 
-  useEffect(() => {
-    if (list.productList) {
-      setProductList(list?.productList);
-    }
-  }, [list]);
+  // useEffect(() => {
+  //   if (list.productList) {
+  //     setProductList(list?.productList);
+  //   }
+  // }, [list]);
 
   useEffect(() => {
     dispatch(fetchShoppingProducts()).then((data) => {
@@ -208,17 +206,35 @@ const Listing = ({ tick }) => {
   }, []);
 
   const handleReviews = () => {
-    
-    dispatch(addReviews({ productId: prodDets._id, review, ratings }))
-      .then((data) => {
+    dispatch(addReviews({ productId: prodDets._id, review, ratings })).then(
+      (data) => {
         if (data?.payload?.data?.success) {
           toast({ title: data?.payload?.data?.message });
           setReview("");
           setRatings(1);
           dispatch(productReview({ productId: prodDets?._id }));
         }
-      })
+      },
+    );
   };
+
+  if (productListLoading) {
+    return (
+      <div className="h-screen w-screen flex flex-grow justify-center items-center">
+        {" "}
+        <Oval
+          height={80}
+          width={80}
+          color="black"
+          visible={productListLoading}
+          ariaLabel="oval-loading"
+          secondaryColor="gray"
+          strokeWidth={2}
+          strokeWidthSecondary={2}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="w-[100%] h-[100%] flex flex-col relative">
@@ -331,7 +347,7 @@ const Listing = ({ tick }) => {
                               value={review}
                               onChange={(e) => setReview(e.target.value)}
                             />
-                         
+
                             <Button
                               onClick={() => {
                                 handleReviews();
@@ -705,55 +721,54 @@ const Listing = ({ tick }) => {
         </div>
       </div>
       <div className=" w-full h-auto flex flex-wrap justify-center lg:justify-start lg:hidden">
-        {productList && productList?.length > 0
+        {productList && productList?.length > 0 ? (
+          productList
+            // .filter(
+            //   (brand) =>
+            //     !brandFilter?.length > 0 || brandFilter.includes(brand.brand)
+            // )
+            // .filter(
+            //   (category) =>
+            //     !categoryFilter?.length > 0 ||
+            //     categoryFilter?.includes(category.category)
+            // )
+            // .sort((a,b)=>{
+            //   if(!sorted) return 0
+            //   const priceA = a.price||a.salePrice
+            //   const priceB = b.price||b.salePrice
+            //   if(sorted=="low"){
+            //     return priceA-priceB
+            //   }
+            //   if(sorted=="high"){
+            //     return priceB-priceA
+            //   }
+            // })
+            .filter(
+              (product) =>
+                !filtered?.length > 0 ||
+                filtered.includes(product.brand) ||
+                filtered.includes(product.category),
+            )
+            .sort((a, b) => {
+              if (!sorted) return 0;
+              const priceA = a.price || a.salePrice;
+              const priceB = b.price || b.salePrice;
 
-          ? productList || !isLoading
-              // .filter(
-              //   (brand) =>
-              //     !brandFilter?.length > 0 || brandFilter.includes(brand.brand)
-              // )
-              // .filter(
-              //   (category) =>
-              //     !categoryFilter?.length > 0 ||
-              //     categoryFilter?.includes(category.category)
-              // )
-              // .sort((a,b)=>{
-              //   if(!sorted) return 0
-              //   const priceA = a.price||a.salePrice
-              //   const priceB = b.price||b.salePrice
-              //   if(sorted=="low"){
-              //     return priceA-priceB
-              //   }
-              //   if(sorted=="high"){
-              //     return priceB-priceA
-              //   }
-              // })
-              .filter(
-                (product) =>
-                  !filtered?.length > 0 ||
-                  filtered.includes(product.brand) ||
-                  filtered.includes(product.category),
-              )
-              .sort((a, b) => {
-                if (!sorted) return 0;
-                const priceA = a.price || a.salePrice;
-                const priceB = b.price || b.salePrice;
-
-                return sorted == "low" ? priceA - priceB : priceB - priceA;
-              })
-              .map((e, i) => (
-                <div key={i} className="flex-row h-fit lg:pl-6">
-                  <ShoppingProductTile
-                    products={e}
-                    filteredProducts={filteredProducts}
-                    prodDets={prodDets}
-                    setProdDets={setProdDets}
-                  />
-                </div>
-              ))
-          : isLoading?
-            <div>Please Wait till Products Load</div>
-            :null}
+              return sorted == "low" ? priceA - priceB : priceB - priceA;
+            })
+            .map((e, i) => (
+              <div key={i} className="flex-row h-fit lg:pl-6">
+                <ShoppingProductTile
+                  products={e}
+                  filteredProducts={filteredProducts}
+                  prodDets={prodDets}
+                  setProdDets={setProdDets}
+                />
+              </div>
+            ))
+        ) : isLoading ? (
+          <div>Please Wait till Products Load</div>
+        ) : null}
       </div>
     </div>
   );
