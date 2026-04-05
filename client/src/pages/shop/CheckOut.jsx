@@ -89,19 +89,18 @@ const CheckOut = () => {
       phone,
     };
     if (userId && !isEdit) {
-      dispatch(addAddress(formData))
-        .then((data) => {
-          if (data.payload?.data?.success) {
-            toast({
-              title: data?.payload.data?.message,
-            });
-            setAddress("");
-            setCity("");
-            setPinCode("");
-            setPhone("");
-            dispatch(fetchAddress(userId));
-          }
-        })
+      dispatch(addAddress(formData)).then((data) => {
+        if (data.payload?.data?.success) {
+          toast({
+            title: data?.payload.data?.message,
+          });
+          setAddress("");
+          setCity("");
+          setPinCode("");
+          setPhone("");
+          dispatch(fetchAddress(userId));
+        }
+      });
     }
     if (isEdit && addressId) {
       const formData = {
@@ -111,20 +110,19 @@ const CheckOut = () => {
         pinCode,
         phone,
       };
-      dispatch(editAddress(formData))
-        .then((data) => {
-          if (data.payload.data.success) {
-            toast({
-              title: "Address Updated",
-            });
-          }
-          setAddress("");
-          setCity("");
-          setPinCode("");
-          setPhone("");
-          dispatch(fetchAddress(userId));
-          setIsEdit(false);
-        })
+      dispatch(editAddress(formData)).then((data) => {
+        if (data.payload.data.success) {
+          toast({
+            title: "Address Updated",
+          });
+        }
+        setAddress("");
+        setCity("");
+        setPinCode("");
+        setPhone("");
+        dispatch(fetchAddress(userId));
+        setIsEdit(false);
+      });
     }
   };
 
@@ -144,8 +142,9 @@ const CheckOut = () => {
   };
 
   const handleDeleteCartItem = (e) => {
-    dispatch(removeItem({ productId: e.products._id, userId }))
-      .then((data) => dispatch(cartProducts(userId)))
+    dispatch(removeItem({ productId: e.products._id, userId })).then((data) =>
+      dispatch(cartProducts(userId)),
+    );
   };
 
   const handleChekOut = () => {
@@ -153,9 +152,7 @@ const CheckOut = () => {
     if (!selectedAddress)
       return toast({ title: "Please select address first" });
 
-
-    dispatch(getKey())
-     
+    dispatch(getKey());
 
     dispatch(createOrder({ amount: totalAmount }))
       .then((data) => {
@@ -168,34 +165,35 @@ const CheckOut = () => {
             description: "Test Transaction",
             order_id: data.payload.data?.order?.id,
             handler: async function (response) {
-              setOrderId(response.razorpay_order_id);
-              setPaymentId(response.razorpay_payment_id);
-              const { data } = await axios.post(
-                `${
-                  import.meta.env.VITE_API_URL
-                }/api/orders/payment-verification`,
-
-                {
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_signature: response.razorpay_signature,
-                  userDet: {
-                    selectedAddress,
-                    userId,
-                    item: CheckOutProduct,
-                    totalAmount,
-                    orderId,
-                    paymentId,
+              try {
+                const { data } = await axios.post(
+                  `${import.meta.env.VITE_API_URL}/api/orders/payment-verification`,
+                  {
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_signature: response.razorpay_signature,
+                    userDet: {
+                      selectedAddress,
+                      userId,
+                      item: CheckOutProduct,
+                      totalAmount,
+                    },
                   },
-                },
-                { withCredentials: true },
-              );
-              if (data.success) {
-                toast({ title: "Ordered" });
-                data.newOrder.items.map((e) => {
-                  dispatch(removeItem({ productId: e.productId, userId }));
-                });
-                navigate("/shop/home");
+                  { withCredentials: true },
+                );
+
+                if (data.success) {
+                  toast({ title: "Ordered" });
+
+                  data.newOrder.items.map((e) => {
+                    dispatch(removeItem({ productId: e.productId, userId }));
+                  });
+
+                  navigate("/shop/home");
+                }
+              } catch (err) {
+                console.log("PAYMENT VERIFY ERROR:", err);
+                toast({ title: "Order failed after payment" });
               }
             },
 
@@ -212,7 +210,7 @@ const CheckOut = () => {
           rzp.open();
         }
       })
-      .catch((err) => (err));
+      .catch((err) => err);
   };
 
   async function createToken(params) {
@@ -220,8 +218,8 @@ const CheckOut = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchAddress(userId))
-   
+    dispatch(fetchAddress(userId));
+
     dispatch(cartProducts(userId));
     if (CheckOutProduct) {
       setProductId(CheckOutProduct?._id);
@@ -415,7 +413,9 @@ const CheckOut = () => {
                 </h1>
                 <div
                   className={`${
-                    cart?.length > 0 ||CheckOutProduct?.length? "sm:h-[40vh] h-52" : "h-auto"
+                    cart?.length > 0 || CheckOutProduct?.length
+                      ? "sm:h-[40vh] h-52"
+                      : "h-auto"
                   } overflow-y-auto pl-4 sm:mt-0 mt-4`}
                 >
                   {CheckOutProduct && CheckOutProduct.length > 0 ? (
